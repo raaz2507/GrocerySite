@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<style>
+    html, body{
+        width:100vw;
+        height:100vh;
+    }
+    *{
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+    }
+    
+    #input_contaner{
+        display:flex;
+        flex-direction:row-reverse;
+        gap:2%;
+    }
+    #imgPreConter{
+        width:50%;
+        height:90vh;
+        border: 2px solid red;
+        margin:2%;
+    }
+    #imgPreConter>img{
+        height:70%;
+        margin: auto auto ;
+        border: 2px solid red;
+    }
+    #othImg{
+        width:100%;
+        height:30%;
+        border:2px solid red;
+        display:flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    #othImg>img{
+        width :25%;
+        height:auto;
+        overflow-x: scroll;
+        flex-shrink: 0;
+    }
+    form{
+        width:50%;
+        height:90%;
+        margin:2%;
+    }
+    fieldset{
+        padding:5%;
+        display:flex;
+        flex-direction: column;
+        gap:.2em;
+    }
+    textarea{
+        resize:none;
+    }
+    form button{
+        margin:.5em;
+        padding:.5em;
+    }
+
+</style>
+<body>
+    <div id="input_contaner">
+        <div id="imgPreConter">
+            <img src="./img/no_Imgae.svg" alt="imagePrivew" id="imgPreview"><br>
+            <div id="othImg">
+                <img src="./img/no_Imgae.svg" alt="img1">
+                <img src="./img/no_Imgae.svg" alt="img2">
+                <img src="./img/no_Imgae.svg" alt="img3">
+                <img src="./img/no_Imgae.svg" alt="img4">
+                <img src="./img/no_Imgae.svg" alt="img5">
+            </div>
+            
+        </div>
+        
+        <form action="">
+        <fieldset>
+            <legend>Add data</legend>
+            <span>
+                <label for="addImg">Add Image</label>
+                <input type="file" name="addImg" id="addImg" >
+            </span>
+            <br>
+            <span>
+                <label for="BrandName">Brand Name</label>
+                <select name="BrandName" id="">
+                    <option value="Amul">Amul</option>
+                    <option value="MotherDairy">Mother dairy</option>
+                    <option value="NoBrand">NoBrand</option>
+                </select>
+            </span>
+            <span>
+                <label for="Name">Product Name</label>
+                <input type="text" name="Name" id="" placeholder="Add product name">
+            </span>
+            <br>
+            <span>
+                <label for="MRP">MRP</label>
+                <input type="number" name="MRP" id="" placeholder="MRP">
+            </span>
+            <br>
+            <span>
+                <label for="FinalPrice">Final Price</label>
+                <input type="number" name="FinalPrice" id="" placeholder="Final price"><br>
+            </span>
+            <span>
+                <label for="Discount">Discount</label>
+                <input type="number" name="Discount" placeholder="Discount">
+            </span>
+            <br>
+            <span>
+                <label for="Catagary">Catagery</label>
+                <select name="Catagary" id="Catagary">
+                    <option value="Fruts">Fruts</option>
+                    <option value="Vegitable">vagitable</option>
+                </select>
+            </span>
+            <br>
+            <span>
+                <label for="Discripsion">Discripction</label><br>
+                <textarea name="Discripsion" id="dis" rows="10" cols="30" placeholder="Add product discription" required></textarea><br>
+            </span>
+            
+            <span>
+                <button type="submit">Add Data</button>
+                <button type="reset">Reset</button>
+            </span>
+        </fieldset>
+        </form>
+        
+    </div>
+</body>
+<script>
+    const addImgBtn = document.getElementById("addImg");
+    const img= document.getElementById("imgPreview");
+    addImgBtn.addEventListener("change", getImg);
+    function getImg(event){
+        const file = event.target.files[0];
+        if(file){
+            let reader= new FileReader();
+            reader.onload= function(e){
+                img.src= e.target.result;
+
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+</html>
