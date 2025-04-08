@@ -20,7 +20,7 @@
                 <label for="BrandName">Brand Name :&nbsp;</label>
                 <select name="BrandName" id="">
                     <optgroup label="no Brand">
-                        <option value="no Brand" selected>no Brand</option>
+                        <option value="no Brand" selected> no Brand</option>
                     </optgroup>
                     <optgroup label="Milk Product">
                         <option value="Amul">Amul</option>
@@ -35,6 +35,26 @@
             <span>
                 <label for="Name">Product Name :&nbsp</label>
                 <input type="text" name="Name" id="" placeholder="Add product name">
+            </span>
+            <br>
+            <span>
+                <label for="quantity">Quantity :&nbsp</label>
+                <input type="number" min="1" name="quantity" id="" placeholder="quantity" style="width:25%">
+                <select name="unit" id="unit" required style="width:25%">
+                    <optgroup label="Gram">
+                        <option value="kg">kilo Gram</option>
+                        <option value="mg">Mili Gram</option>
+                    </optgroup>
+                    <optgroup label="Liquid">
+                        <option value="mili_liter ">Mili Liter</option>
+                        <option value="liter ">Liter</option>
+                    </optgroup>
+                    <optgroup label="number">
+                        <option value="darjan ">darjan</option>
+                        <option value="pair">pair</option>
+                        <option value="unit" selected>number</option>
+                    </optgroup>
+                </select>
             </span>
             <br>
             <span>
