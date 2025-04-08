@@ -9,19 +9,20 @@ header{
 .LogoNTitle{
     /* border:2px solid red; */
 }
-header .LogoNTitle .WebTitle{
-    display:inline-block;
-    text-transform: capitalize;
-    color:#eef6fc;
-    font-size: 5em;
-    /* border:1px solid red; */
-    margin-left:1em;
+header .LogoNtitle{
 }
 header .LogoNTitle .logo{
-    width:9em;
+    width:100px;
     height:auto;
     margin:1%;
 }
+header .WebTitle{
+    display:inline-block;
+    text-transform: capitalize;
+    font-size: 50px;
+    color:#eef6fc;
+}
+
 header #searchBar {
     font-size: xx-large;
     /* width:70%; */
