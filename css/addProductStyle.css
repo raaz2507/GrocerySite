@@ -10,17 +10,17 @@ html, body{
 
 #contaner{
     padding:1%;
-    width:100%;
-    height:100%;
+    width:98%;
+    height:98%;
 }
 form{
     width:48%;
-    height:100%;
+    height:90%;
     display: inline-block;
 }
 fieldset{
     width:100%;
-    height:90vh;
+    height:100%;
     padding:5%;
     border-radius: 10px;
     background-color:antiquewhite;
@@ -88,44 +88,25 @@ form button[type="reset"]:hover{
     color: rgba(255, 166, 0, 0.808);
     font-weight: 800;
 }
-/* flex styling */
-/*
-#contaner{
-    display:flex;
-    flex-direction:row;
-    gap :2%;
-}
-form{
-    flex-basis:50%;
-}
-#imgPreConter{
-    flex-basis:50%;
-}
-fieldset{
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-}*/
+
 /* image contaner styling */
-#imgPreConter *{
-    border: 1px solid red;
-}
+
 #imgPreConter{
-    display: inline-block;
-    width: 48%;
-    height: 100%;
+    /* width: 50%; */
+    height: 90%;
     margin: 2mm auto;
+    box-shadow: 1px 1px 4px 2px rgba(38, 38, 38, 0.116);
 }
 
 #imgPreviewBox{
     width:100%;
     height:65%;
-    object-fit: contain;
+
 }
 #imgPreviewBox img{
     width:90%;
-    height:auto;
-    
+    height:100%;
+    object-fit: contain;
 }
 #imgPreviewBox{
     display:flex;
@@ -142,7 +123,8 @@ fieldset{
     /* display:inline-block; */
     width:25%;
     height:100%;
-    
+    box-shadow: 1px 1px 4px 2px rgba(38, 38, 38, 0.116);
+
 }
 #ImgGrid div img{
     width:100%;
@@ -157,30 +139,18 @@ fieldset{
 #ImgGrid div{
     flex: 0 0 25%;
 }
-/* #imgPreConter *{
-    border: 2px solid red;
+/* flex setting */
+/* flex for contaner start */
+#contaner{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+form{
+   flex:0 0 48%;
 }
 #imgPreConter{
-    max-height:100px;
-    background-color:blue;
+   flex:0 0 48%;
 }
-#imgPreviewBox{
-    width:100%;
-    height:70%;
-}
-#imgPreviewBox img{
-    width:100%;
-    height:100%;
-}
-#ImgGrid{
-    width:100%;
-    height:30%;
-}
-#ImgGrid div{
-    width:25%;
-    height:100%;
-}
-#ImgGrid div img{
-    width:100%;
-    height:100%;
-} */
+/* flex for contaner end */
