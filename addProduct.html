@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
-</head>
+    <link rel="stylesheet" href="./css/style,.css">
 <style>
     html, body{
         width:100vw;
@@ -15,157 +15,78 @@
         padding:0;
         box-sizing: border-box;
     }
-    
     #contaner{
-        display:flex;
-        flex-direction:row;
-        gap :2%;
-        padding:3%;
+        width:98%;
+        height:98%;
+        padding:2%;
+        border:1px solid red;
+        margin: 0 auto;
+        overflow:auto;
     }
-    
     form{
-        flex-basis:50%;
-        /* width:50%; */
-        /* margin:2%; */
+        height:100%;
     }
     fieldset{
-        width:100%;
-        height:90vh;
-        padding:5%;
-        display:flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius: 10px;
-        background-color:antiquewhite;
-        /* border:none; */
+        height:100%;
     }
-    fieldset span label{
-        display:inline-block;
-        width:45%;
-        font-size:1.2em;
-        /* border:2px solid red; */
-    }
-    
-    fieldset span select{
-        width:45%;
-        font-size:1.2em;
-        text-align:center;
-        background-color: rgba(255, 251, 245, 0.719);
-        border-radius:10px;
-        padding:3px;
-        box-shadow: none;
-    }
-    textarea{
-        resize:none;
-        width:80%;
-        height:10em;
-        padding:2%;
-        border-radius: 10px;
-        border:2px solid rgba(31, 143, 255, 0.767);
-        background-color: rgba(196, 225, 255, 0.315);
-  
-        font-size: 1.2em;
-    }
-    fieldset span button{
-        margin-right: 30%;
-        padding:.7em;
-        font-size: 1em;
-        border-radius:10px;
-    }
-    fieldset input[type="file"]{
-        background-color:aqua;
-
-    }
-    fieldset input[type="text"], input[type="number"]{
-       width: 45%;
-       font-size:1.1em;
-       padding:2px;
-       border: 1px solid rgba(0, 136, 255, 0.818);
-       border-radius: 7px;
-       color:rgba(0, 136, 255, 0.818);
-    }
-    form button[type="submit"]{
-        background-color:rgba(0, 149, 0, 0.658);
-        color:white;
-    }
-    form button[type="submit"]:hover{
-        background-color: white;
-        color: rgba(0, 149, 0, 0.658);
-    }
-    form button[type="reset"]{
-        background-color: rgba(255, 166, 0, 0.808);
-        color:white;
-        font-weight: 800;
-    }
-    form button[type="reset"]:hover{
-        background-color: white;
-        color: rgba(255, 166, 0, 0.808);
-        font-weight: 800;
-    }
-
-    /* image contaner styling */
-    #imgPreConter{
-        flex-basis: 50%;
-        display:grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 60% 30%;
-        grid-template-areas:"imgPreBox"
-                            "imgGrid";
-        gap:1%;
+    /* img contaner seting */
+    #imgPreConter *{
+        border:1px solid red;
     }
     #imgPreviewBox{
-        grid-area: imgPreBox;
+        width: 100%;
+        height:70%;
+        margin:2%;
         overflow:auto;
+        object-fit: contain;
     }
     #imgPreviewBox img{
-        max-width:100%;
-        max-height:100%;
+        width:100%;
+        height:100%;
     }
     #ImgGrid{
-        grid-area: imgGrid;
-    }
-    
-    #imgPreConter, #imgPreConter *{
-        border: 2px solid red;
-    }
-    /*
-    #imgPreConter{
-        flex-basis: 50%;
-    }
-    #imgPreviewBox{
-        height:60%;
-        max-height:60%;
-        width:80%;
-        max-width:80%;
-        margin: 2% auto;
-        overflow:auto;
-    }
-    #imgPreviewBox img{
-        max-width:100%;
-        max-height:100%;
-    }
-    */
-    #ImgGrid {
-        display: flex;
-        overflow-x: auto; 
-        width: 100%;
-        height:30%;
-        gap: 10px;
-        white-space: nowrap;
-    }
-
-    #ImgGrid div {
-        min-width: 25%; 
-        height: 100%;
-        overflow: auto;
-    }
-    #ImgGrid div img{
         width:100%;
-        height:auto;
-
+        height:30%;
     }
-
+    /* flex setting */
+    /* flex for contaner start */
+    #contaner{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    form{
+       flex:0 0 48%;
+    }
+    #imgPreConter{
+       flex:0 0 48%;
+    }
+    /* flex for contaner start */
+    /* flex for img contaner start*/
+    
+    #imgPreConter{
+        display:flex;
+        flex-direction: column;
+    }
+    #ImgGrid{
+        flex:0 0 70%;
+    }
+    imgPreviewBox{
+        flex:0 0 30%;
+    }
+    /* flex for img contaner end*/
+    /* flex for img grid start*/
+    #ImgGrid{
+        display:flex;
+        flex-direction: row;
+    }
+    #ImgGrid div{
+        flex:;
+    }
+    /* flex for img grid end*/
 </style>
+</head>
 <body>
     <div id="contaner">
         <form action="./php/main.php" method="post">
@@ -230,11 +151,14 @@
             </span>
         </fieldset>
         </form>
-        <div id="imgPreConter">
+        <!-- imgPreConter is main img contener -->
+        <div id="imgPreConter"> 
+            <!-- imgPreviewBox only show one image at a time as select in imgGrid -->
             <div id="imgPreviewBox">
                 <img src="./img/no_Imgae.svg" alt="imagePrivew" id="imgPreview"><br>
             </div>
             <div id="ImgGrid">
+                <!-- here show all imgae , its div and img tag genrtae by js for n number of image -->
                 <div><img src="./img/no_Imgae.svg" alt="img1"></div>
                 <div><img src="./img/no_Imgae.svg" alt="img2"></div>
                 <div><img src="./img/no_Imgae.svg" alt="img3"></div>
@@ -243,25 +167,48 @@
             </div>
         </div>
     </div>
-
 <script>
-    const addImgBtn = document.getElementById("addImg");
-    const img= document.getElementById("imgPreview");
-    addImgBtn.addEventListener("change", getImg);
-    function getImg(event){
-        const file = event.target.files[0];
-        if(file){
-            let reader= new FileReader();
-            reader.onload= function(e){
-                img.src= e.target.result;
-                console.log(e.target.result);
-                // document.getElementById("imgPreviewBox").style.backgroundImage = `url(${e.target.result})`;
-            }
+    document.getElementById("addImg").addEventListener("change", function (event) {
+    let imgPreview = document.getElementById("imgPreview");
+    let imgGrid = document.getElementById("ImgGrid");
+
+    // पहले से मौजूद ग्रिड को क्लियर करें (अगर आप नई इमेज जोड़ने पर पुरानी हटाना चाहते हैं)
+    imgGrid.innerHTML = "";
+
+    // फाइल सेलेक्ट करने पर
+    if (event.target.files.length > 0) {
+        let fileList = event.target.files;
+
+        for (let i = 0; i < fileList.length; i++) {
+            let file = fileList[i];
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                // प्रीव्यू बॉक्स में पहली इमेज दिखाएं
+                if (i === 0) {
+                    imgPreview.src = e.target.result;
+                }
+
+                // इमेज ग्रिड में इमेज ऐड करें
+                let imgDiv = document.createElement("div");
+                let imgTag = document.createElement("img");
+                imgTag.src = e.target.result;
+                imgTag.alt = "Uploaded Image " + (i + 1);
+                imgTag.onclick = function () {
+                    imgPreview.src = this.src; // ग्रिड से क्लिक करने पर बड़ी इमेज बदले
+                };
+
+                imgDiv.appendChild(imgTag);
+                imgGrid.appendChild(imgDiv);
+            };
+
             reader.readAsDataURL(file);
         }
     }
+});
+
 </script>
-<!-- <?php include "./php/main.php" ?> -->
+
 <?php include './php/main.php'; ?>
 </body>
 </html>

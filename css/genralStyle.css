@@ -8,3 +8,11 @@ html, body{
     width:100vw;
     height:100vh;
 }
+.svg{
+    
+    background-size:cover;
+    background-size:contain;
+    display:inline-block;
+    background-repeat:no-repeat;
+    /* background-color:white; */
+}
