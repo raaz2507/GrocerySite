@@ -16,7 +16,7 @@
 	border-radius: 10px;
 	box-shadow: inset 1px 1px 14px 2px rgb(0, 0, 0);
 	position: relative;
-
+	overflow-y: auto;
 }
 .category .categoryTitleDiv{
 	width:2rem;

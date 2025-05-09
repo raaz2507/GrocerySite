@@ -262,16 +262,16 @@ class Dashbord {
 		function wishList(pid) {
 				console.log("Wish List button clicked for product:", pid);
 				
-				const fillIcon = `./img/heartFill.svg`;
-				const emptyIcon = `./img/heartEmpty.svg`;
+				const fillIcon = `heartFill.svg`;
+				const emptyIcon = `heartEmpty.svg`;
 				
 				const wishListIcon = button.querySelector("img");
 				// check current state
 				if (wishListIcon.src.includes(fillIcon)) {
-						wishListIcon.src = emptyIcon;
+						wishListIcon.src = `./img/${emptyIcon}`;
 						wishListIcon.classList.remove("active");
 				} else {
-						wishListIcon.src = fillIcon;
+						wishListIcon.src = `./img/${fillIcon}`;
 						wishListIcon.classList.add("active");
 
 						// optional: add pulse animation

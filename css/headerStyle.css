@@ -74,7 +74,7 @@ header *{
 		color: rgb(0, 200, 0);
 	}
 	header .btnArea .cartBtn .cartIcon:hover{
-		 animation: shake 0.5s ease;
+		 animation: shakeCart 0.5s ease;
     filter: brightness(0) saturate(100%) invert(36%) sepia(84%) saturate(508%) hue-rotate(74deg) brightness(97%) contrast(90%);
 	}
 	header .btnArea .cartBtn .cartIcon{
@@ -158,7 +158,7 @@ header *{
 		}
 			
 	}
-	@keyframes shake {
+	@keyframes shakeCart {
 		0%{ transform: rotate(4deg);}
 		20%{ transform: rotate(8deg);}
 		40%{ transform: rotate(16deg);}
