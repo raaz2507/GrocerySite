@@ -1,6 +1,19 @@
 
 
 class Dashbord {
+	constructor(){
+		this.createCatagoryRowNavbar();
+		this.createRow();
+		this.setEventsOnElemets();
+		
+	}
+	setEventsOnElemets(){
+		
+		document.getElementById("ItemCategory").addEventListener("click", (event)=>{
+			this.eventOnItemCategory(event);
+		});
+
+	}
 	createRow() {
 		const productData = this.getDataFromSQL();
 	
@@ -77,9 +90,9 @@ class Dashbord {
 		milkProCard.appendChild(milkPro_fragment);
 	}
 	createProductCard(ProdeuctData) {
-		const {ProductId, brand_name , product_name, mrp, final_price} = ProdeuctData;
+		const {ProductId, brand_name , product_name, mrp, final_price, Qty, unit} = ProdeuctData;
 		const {ThumImage, mainImage, OthImage, altText}=ProdeuctData;
-		const unit="mg", qty=1;
+
 		const elementData = {
 			// container
 			container: { Elm_type: "div", Elm_class: ["productContaner"] },
@@ -94,8 +107,17 @@ class Dashbord {
 			proDetails: { Elm_type: "div", Elm_class: ["proDetails"] },
 			brandName: { Elm_type: "p", Elm_class: ["brandName"] },
 			productNme: { Elm_type: "p", Elm_class: ["productName"] },
-			quantity: { Elm_type: "p", Elm_class: ["quantity"] },
-			MRP: { Elm_type: "p", Elm_class: ["mrp"] },
+			
+			// ==== qunatitye ====
+			quantityDiv: { Elm_type: "p", Elm_class: ["quantity"] },
+			qtyValue:{Elm_type: "span", Elm_class:["quantityValue"]},
+			unitValue:{Elm_type: "span",Elm_class:["unit"]},
+
+			//=====mrp =======
+			MRP_Div: { Elm_type: "p", Elm_class: ["mrp"] },
+			MRP_Value: {Elm_type:'span', Elm_class:["mrpValue"]},
+			finalPrice: {Elm_type: "span", Elm_class: ["finalPriceValue"]},
+			
 			rating: { Elm_type: "p", Elm_class: ["rating"] },
 			buttons: { Elm_type: "div", Elm_class: ["buttons"] },
 			//: {Elm_type:, Elm_class: []},
@@ -121,15 +143,28 @@ class Dashbord {
 
 		const { container } = element;
 		const { imgFrame, discountElemt, productImg, wishBtn } = element;
-		const { proDetails, brandName, productNme, quantity, MRP, rating } =
-			element;
+		const { proDetails, brandName, productNme, rating } =element;
+		const {quantityDiv, qtyValue, unitValue }=element;
+		const {MRP_Div, MRP_Value,finalPrice}=element;
+
+
+
 		const { buttons } = element;
 		container.id = ProductId;
 
 		// ==== imgFrame ====
-		discountElemt.innerHTML = `<span class="discountValue">${
-			100 - parseInt((final_price / mrp) * 100)
-		}</span>%<br>off`;
+		if(mrp !== final_price){
+			if (discountElemt.classList.contains("hide")){
+				discountElemt.classList.remove("hide");
+			}
+			discountElemt.innerHTML = `<span class="discountValue">${
+				100 - parseInt((final_price / mrp) * 100)
+			}</span>%<br>off`;
+		}else{
+			if (!discountElemt.classList.contains("hide")){
+				discountElemt.classList.add("hide");
+			}
+		}
 
 		productImg.src = `./../img/ProductImages/${ProductId}/${ThumImage}` ;
 		console.log(productImg.src);
@@ -142,18 +177,36 @@ class Dashbord {
 		imgFrame.appendChild(wishBtn);
 
 		// ==== proDetails ====
-		brandName.innerText = brand_name;
-		proDetails.appendChild(brandName);
+		if (brand_name !=="NO_Brand"){
+			brandName.innerText = brand_name;
+			proDetails.appendChild(brandName);
+		}
 
 		productNme.innerText = product_name;
 		proDetails.appendChild(productNme);
 
-		quantity.innerHTML = `<span class="num">${qty}</span>&nbsp;<span class="unit">${unit}</span>`;
-		proDetails.appendChild(quantity);
 
-		MRP.innerHTML = `<span class="mrpValue">₹${mrp}&nbsp;</span>
+		qtyValue.innerText=`${Qty} `;
+		unitValue.innerText =`${unit}`;
+		quantityDiv.appendChild(qtyValue);
+		quantityDiv.appendChild(unitValue);
+
+		// quantity.innerHTML = `<span class="num">${Qty}</span>&nbsp;<span class="unit">${unit}</span>`;
+		proDetails.appendChild(quantityDiv);
+
+		if (mrp!==final_price){
+			MRP_Value.innerText= `₹${mrp} `;
+		}
+		finalPrice.innerText = `₹${final_price}`;
+		MRP_Div.appendChild(MRP_Value);
+		MRP_Div.appendChild(finalPrice);
+
+		proDetails.appendChild(MRP_Div);
+		/*
+		MRP_Div.innerHTML = `<span class="mrpValue">₹${mrp}&nbsp;</span>
 									<span class="finalPriceValue">₹${final_price}</span>`;
-		proDetails.appendChild(MRP);
+		*/
+		
 
 		rating.innerHTML = `<span class="ratingValue">4.5</span>
 		    								<span class="reviewCount">(1000)</span>`;
@@ -168,46 +221,140 @@ class Dashbord {
 
 		return container;
 	}
-	createProductCardROW(ProdeuctData) {
-		const {ProductId, image, brand_name, product_name,mrp, final_price, category,description} = ProdeuctData;
-		const unit="mg";
-		return `<div class="productContaner" id="productId1">
-            <div class="imgFrame">
-                <p class="discount"><span class="discountValue">${parseInt(
-									(final_price / mrp) * 100
-								)}</span>% <br>off </p>
-                <img src="${image["main"]}" alt="" class="productImg">
-                <button class="wishList" onclick>
-                    <img src="./img/heartEmpty.svg" alt="" class="wishIcon">
-                </button>
-            </div>
-            <div class="proDetails">
-                <p class="brandName">${brand_name}</p>
-                <p class="productName">${product_name}</p>
-                <p class="quantity"><span class="num">${qty}</span>&nbsp;<span class="unit">${unit}</span></p>
-                <p class="mrp">
-                    <span class="mrpValue">₹ ${mrp} &nbsp;</span>
-                    <span class="finalPriceValue">₹ ${final_price} </span>
-                </p>
-                <p class="rating">
-                    <span class="ratingValue">4.5</span>
-                    <span class="reviewCount">(1000)</span>
-                </p>
-            </div>
-            <div class="buttons">
-                <button class="buy">Buy</button>
-                <button class="addtoCart"><img src="./img/cart-arrow-down.svg" alt="add to cart" height="100%"></button>
-            </div>
-        </div>`;
+
+
+	eventOnItemCategory(event){
+		const button = event.target.closest("button");
+
+		if (button) {
+				const productDiv = button.closest(".productContaner");
+				const productId = productDiv?.id;
+				// console.log(productId);
+				// ✅ Get inner image only for wishlist button
+
+				const buttonActions = {
+						buy: ()=> buyBtn(productId),
+						addtoCart: ()=> addToCartBtn(productId),
+						wishList: () => wishList(productId)
+				};
+				
+
+				if (button.classList.contains("buy")) {
+						buttonActions['buy']();
+				} else if (button.classList.contains("addtoCart")){
+						buttonActions['addtoCart']();
+				} else if (button.classList.contains("wishList")) {
+						buttonActions["wishList"]();
+				} else {
+						console.log("Other button clicked");
+				}
+		}
+
+		// ✅ Functions
+		function buyBtn(pid) {
+				console.log("Buy button clicked for product:", pid);
+		}
+
+		function addToCartBtn(pid) {
+				console.log("Add to Cart button clicked for product:", pid);
+		}
+
+		function wishList(pid) {
+				console.log("Wish List button clicked for product:", pid);
+				
+				const fillIcon = 'heartFill.svg';
+				const emptyIcon = 'heartEmpty.svg';
+				
+				const wishListIcon = button.querySelector("img");
+				// check current state
+				if (wishListIcon.src.includes(fillIcon)) {
+						wishListIcon.src = `./../img/${emptyIcon}`;
+						wishListIcon.classList.remove("active");
+				} else {
+						wishListIcon.src = `./../img/${fillIcon}`;
+						wishListIcon.classList.add("active");
+
+						// optional: add pulse animation
+						setTimeout(() => {
+								wishListIcon.classList.remove("active"); // removes scale after 300ms
+						}, 300); // must match CSS transition time
+				}
+		}
 	}
+
+	createCatagoryRowNavbar(){
+		const catagoryNavbar = document.getElementById("catagoryNavbar");
+		const catagoryData= getCatagoryData();
+
+		const fragment =document.createDocumentFragment();
+		catagoryData.forEach(data=>{
+			let card = createNavbarCard(data);
+			fragment.appendChild(card);
+		});
+
+		const ul=document.createElement('ul');
+		ul.appendChild(fragment);
+		catagoryNavbar.appendChild(ul);
+
+		function getCatagoryData(){
+			return   [{
+						id: 1,
+						categoryName: 'Fruits',
+						images: 'FruitThumbnail.png',
+						color: 'rgb(255, 166, 0)',
+						altText: 'Fruit Catagory'
+					},
+					{
+						id: 2,
+						categoryName: 'Vegitables',
+						images: 'VegetablesThumbnail.png',
+						color: 'rgb(34, 238, 34)',
+						altText: 'Vegetables Catagory'
+					},
+					{
+						id: 3,
+						categoryName: 'Milk-Product',
+						images: 'MilkProductThumbnail.png',
+						color: 'rgb(255, 239, 196)',
+						altText: 'MilkProduct Catagory'
+					}
+				];
+
+		}
+
+
+		function createNavbarCard(catagoryData){
+			const {categoryName, images, color, altText}=catagoryData;
+
+			const li = document.createElement('li');
+			li.classList.add("catagoryThumbnail");
+			li.style.backgroundColor= color;
+			li.style.outlineColor =color;
+
+			const anchor = document.createElement('a');
+			anchor.href= `#${categoryName}`;
+			anchor.style.borderColor =color;
+
+			const img = document.createElement('img');
+			img.src=`./img/catagoryThumbnail/${images}`;
+			img.alt= altText;
+			anchor.appendChild(img);
+			li.appendChild(anchor);
+			return li;
+		}
+	}
+	
+
 	getDataFromSQL() {
 		return [
 			{
 				ProductId: 'prod_2',
-				brand_name: 'no Brand',
+				brand_name: 'NO_Brand',
 				product_name: 'Fresh Apple',
 				mrp: '150.00',
 				final_price: '120.00',
+				Qty: 1,
+				unit: 'kg',
 				category: 'Fruits',
 				categoryColor: 'rgb(255, 166, 0)',
 				ThumImage: 'apple.jpg',
@@ -216,10 +363,12 @@ class Dashbord {
 			},
 			{
 				ProductId: 'prod_6',
-				brand_name: 'no Brand',
+				brand_name: 'NO_Brand',
 				product_name: 'Banana',
 				mrp: '60.00',
 				final_price: '50.00',
+				Qty: 12,
+				unit: 'pice',
 				category: 'Fruits',
 				categoryColor: 'rgb(255, 166, 0)',
 				ThumImage: 'banana.jpg',
@@ -228,10 +377,12 @@ class Dashbord {
 			},
 			{
 				ProductId: 'prod_3',
-				brand_name: 'no Brand',
+				brand_name: 'NO_Brand',
 				product_name: 'Organic Potato',
 				mrp: '40.00',
 				final_price: '35.00',
+				Qty: 100,
+				unit: 'g',
 				category: 'Vegitables',
 				categoryColor: 'rgb(34, 238, 34)',
 				ThumImage: 'pineapple.jpg',
@@ -244,6 +395,8 @@ class Dashbord {
 				product_name: 'Amul Gold Milk',
 				mrp: '60.00',
 				final_price: '55.00',
+				Qty: 500,
+				unit: 'ml',
 				category: 'Milk_Product',
 				categoryColor: 'rgb(255, 239, 196)',
 				ThumImage: 'anuml500ml.jpg',
@@ -256,6 +409,8 @@ class Dashbord {
 				product_name: 'Mother Dairy Butter',
 				mrp: '250.00',
 				final_price: '230.00',
+				Qty: 100,
+				unit: 'g',
 				category: 'Milk_Product',
 				categoryColor: 'rgb(255, 239, 196)',
 				ThumImage: 'strobary.jpg',
@@ -264,10 +419,12 @@ class Dashbord {
 			},
 			{
 				ProductId: 'prod_5',
-				brand_name: 'MotherDairy',
-				product_name: 'Mother Dairy Butter',
-				mrp: '250.00',
-				final_price: '230.00',
+				brand_name: 'Amul',
+				product_name: 'paneer',
+				mrp: '80.00',
+				final_price: '80.00',
+				Qty: 100,
+				unit: 'g',
 				category: 'Milk_Product',
 				categoryColor: 'rgb(255, 239, 196)',
 				ThumImage: 'orange.jpg',
@@ -279,7 +436,6 @@ class Dashbord {
 }
 
 const myDashbord = new Dashbord();
-myDashbord.createRow();
 
 /*
 

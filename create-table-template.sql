@@ -1,10 +1,12 @@
 CREATE TABLE `Products` (
     `Id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
     `ProductId` varchar(13) NOT NULL,
-    `brand_name` varchar(50) DEFAULT NULL,
+    `brand_name` varchar(50) DEFAULT 'NO_Brand',
     `product_name` varchar(100) DEFAULT NULL,
     `mrp` decimal(10, 2) DEFAULT NULL,
     `final_price` decimal(10, 2) DEFAULT NULL,
+    `Qty` INT NOT NULL DEFAULT 0 COMMENT 'add quntity here',
+    `unit` VARCHAR(10) NOT NULL COMMENT 'mg, kg, ml, l, dergon, pair',
     `category` varchar(50) DEFAULT NULL,
     `description` TEXT,
     PRIMARY KEY (`Id`),
@@ -15,12 +17,12 @@ CREATE TABLE `Products` (
 
 
 INSERT INTO `Products` VALUES
-(1, 'prod_1', 'Amul','Amul Gold Milk',60.00,55.00,'Milk_Product','Full cream milk for daily use.'),
-(2, 'prod_2', 'no Brand','Fresh Apple',150.00,120.00,'Fruits','High-quality fresh apples from Kashmir.'),
-(3, 'prod_3', 'no Brand','Organic Potato',40.00,35.00,'Vegitables','Fresh organic potatoes directly from farms.'),
-(4, 'prod_4', 'MotherDairy','Mother Dairy Butter',250.00,230.00,'Milk_Product','Pure and creamy butter for daily use.'),
-(5, 'prod_5', 'MotherDairy','Mother Dairy Butter',250.00,230.00,'Milk_Product','Pure and creamy butter for daily use.'),
-(6, 'prod_6', 'no Brand','Banana',60.00,50.00,'Fruits','Fresh and naturally ripened bananas.');
+(1, 'prod_1', 'Amul','Amul Gold Milk',60.00,55.00, 500, 'ml', 'Milk_Product','Full cream milk for daily use.'),
+(2, 'prod_2', 'NO_Brand','Fresh Apple',150.00,120.00, 1, 'kg','Fruits','High-quality fresh apples from Kashmir.'),
+(3, 'prod_3', 'NO_Brand','Organic Potato',40.00,35.00,100, 'g','Vegitables','Fresh organic potatoes directly from farms.'),
+(4, 'prod_4', 'MotherDairy','Mother Dairy Butter',250.00,230.00, 100, 'g' ,'Milk_Product','Pure and creamy butter for daily use.'),
+(5, 'prod_5', 'Amul','paneer',80.00,80.00, 100, 'g', 'Milk_Product','Pure and creamy butter for daily use.'),
+(6, 'prod_6', 'NO_Brand','Banana',60.00,50.00, 12, 'pice', 'Fruits','Fresh and naturally ripened bananas.');
 
 CREATE TABLE `catagory` (
   `id` smallint(6) NOT NULL COMMENT 'index',
@@ -61,6 +63,8 @@ SELECT
   p.product_name,
   p.mrp,
   p.final_price,
+  p.Qty,
+  p.unit,
   p.category,
   c.color AS categoryColor,
   pi.ThumImage,

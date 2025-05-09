@@ -7,7 +7,10 @@
     <title>Grosery Site</title>
     <link rel="stylesheet" href="./css/genralStyle.css">
     <link rel="stylesheet" href="./css/headerStyle.css">
+    <link rel="stylesheet" href="./css/banner.css">
+    <link rel="stylesheet" href="./css/navBarStyle.css">
     <link rel="stylesheet" href="./css/mainStyle.css">
+    <link rel="stylesheet" href="./css/ProductCategoryRows.css">
     <link rel="stylesheet" href="./css/footerStyle.css">
     <style>
         body{
@@ -22,19 +25,6 @@
             background-color:aqua;
         }
 
-        /* ====Banner Styling Start=== */
-        .banner_area{
-            width:80%;
-            height: 300px;
-            margin: 0 auto;
-        }
-        .banner_area #BanerImg{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            object-position: center;
-        }
-         /* ====Banner Styling end=== */
         .test{
             width:100%;
             height:13vh;
@@ -78,26 +68,75 @@
 			    </div>
         </header>
         <section >
-            <div class="banner_area">
-                <img src="./img/banerImg1.jpg" alt="banner" id="BanerImg">
-            </div> 
-            <div id="usrReview" class="test">user review</div>
+			<div class="banner_area">
+				<img src="./img/banner/banerImg1.jpg" alt="banner" id="BanerImg">
+				<p class="bannerText"><span class="bannerTitle">big Discount on Grocerys</span><br><span>shop now & save</span></p>
+			</div> 
+			<div id="usrReview" class="test">user review</div>
         </section>
 	
         <aside>
-            <nav>
-                <ul>
-                    <li>Home</li>
-                    <li>Shop</li>
-                    <li>News and Offer</li>
-                    <li>About</li>
-                </ul>
-            </nav>
-        </aside>
+            <nav id="catagoryNavbar">
+                      <!-- <ul >
+                          <li id="fruits" class="catagoryThumbnail">
+                              <a href="#Fruits">
+                                  <img src="./img/catagoryThumbnail/FruitThumbnail.png" alt="Fruit Catagory">
+                              </a>
+                          </li>
+                          <li id="vegetables" class="catagoryThumbnail">
+                              <a href="#Vegitables">
+                                  <img src="./img/catagoryThumbnail/VegetablesThumbnail.png" alt="Vegetables Catagory">
+                              </a>
+                          </li>
+                          <li id="milkProducts" class="catagoryThumbnail">
+                              <a href="#Milk-Product">
+                                  <img src="./img/catagoryThumbnail/MilkProductThumbnail.png" alt="MilkProduct Catagory">
+                              </a>
+                          </li>
+                      </ul> -->
+                  </nav>
+              </aside>
         
         <main>
-            <div id="itemCategory" > 
-                <!-- heare rows will add as catagries  -->
+            <div id="ItemCategory" >
+          
+                <!-- Fruits, Vegitable, Milk-Product -->
+                <!-- <div id="test" class="category">
+                    <div class="productContaner" id="productId1">
+                        <div class="imgFrame">
+                            <p class="discount"><span class="discountValue">10</span>% <br>off </p>
+                            <img src="./img/testImg/img1.jpg" alt="" class="productImg">
+                            <button class="wishList">
+                                <img src="./img/heartEmpty.svg" alt="" class="wishIcon">
+                            </button>
+                        </div>
+                        <div class="proDetails">
+                            <p class="brandName">brand name</p>
+                            <p class="productName">Product Name</p>
+                            <p class="quantity">
+                                <span class="quantityValue">10</span>&nbsp;
+                                <span class="unit">mg</span>
+                            </p>
+                            <p class="mrp">
+                                <span class="mrpValue">₹10 &nbsp;</span>
+                                <span class="finalPriceValue">₹10 </span>
+                            </p>
+                            <p class="rating">
+                                <span class="ratingValue">4.5</span>
+                                <span class="reviewCount">(1000)</span>
+                            </p>
+                        </div>
+                        <div class="buttons">
+                            <button class="buy">Buy</button>
+                            <button class="addtoCart"><img src="./img/cart-arrow-down.svg" alt="add to cart" height="100%"></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="Fruits" class="category"></div>
+                <div id="Vegitables" class="category"></div>
+                <div id="Milk-Product" class="category"></div> -->
+        
                 <div id="mostSelling" class="test">Most selling</div>
                 
                 <!-- sepecify for User -->
@@ -151,6 +190,7 @@
     </footer>
     </div>
     <script src="./js/banner.js"></script>
+    <script src="./js/productCard.js"></script>
     <script>
         
     </script>
