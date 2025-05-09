@@ -26,6 +26,7 @@ fieldset{
     background-color:antiquewhite;
     /* border:none; */
 }
+
 fieldset span label{
     display:inline-block;
     width:45%;
@@ -140,12 +141,18 @@ form button[type="reset"]:hover{
     flex: 0 0 25%;
 }
 /* flex setting */
+fieldset{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
 /* flex for contaner start */
 #contaner{
     display:flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+
 }
 form{
    flex:0 0 48%;

@@ -12,25 +12,15 @@ header *{
 		
 	}
 	header .logoNTitle .siteLogo{
-		width:7rem;
-		margin: 0 1rem;
-		padding: .5rem;
+		width:5.5rem;
 	}
 	
 	header .logoNTitle .siteTitle{
-		/* font-size: 3rem; */
-		/* color:rgb(255, 255, 255); */
-		/* background-color: rgba(0, 0, 0, 0.1); */
-		/* border-radius: 10px; */
-		width: max-content;
-		
-		/* padding: 1rem; */
-		/* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+		width: 13rem;
 	}
 	header .searchBar{
 		background-color: rgba(224, 224, 224, 0.9);
 		border-radius: 13px;
-		
 	}
 	header .searchBar input[type="search"]{
 		background-color: transparent;
@@ -100,7 +90,7 @@ header *{
 	header{
 		display: flex;
 		/* flex-wrap: wrap; */
-		gap: 1rem;
+		gap: 8rem;
 		align-items: center;
 		justify-content: center;
 	}
@@ -138,7 +128,7 @@ header *{
 		header {
 			flex-direction: column;
 			align-items: stretch;
-			
+			gap:1rem;
 		}
 		/* header .logoNTitle{
 			flex: 1 0 100%;
@@ -158,13 +148,13 @@ header *{
 			
 		}
 		header .btnArea{
-			position: absolute;
+			/* position: fixed;
 			bottom: 0;
 			left:50%;
 			transform: translate(-50%);
 			padding:.5rem;
 			border-radius: 10px;
-			background-color: rgba(128, 128, 128, 0.4);
+			background-color: rgba(128, 128, 128, 0.4); */
 		}
 			
 	}
