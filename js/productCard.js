@@ -313,7 +313,7 @@ class Dashbord {
 					},
 					{
 						id: 3,
-						categoryName: 'Milk-Product',
+						categoryName: 'Milk_Product',
 						images: 'MilkProductThumbnail.png',
 						color: 'rgb(255, 239, 196)',
 						altText: 'MilkProduct Catagory'

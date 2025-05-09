@@ -1,15 +1,15 @@
 imgArre = [
-	"banner/banerImg1.jpg",
-	"banner/banerImg2.jpg",
-	"banner/banerImg3.jpg",
-	"banner/banerImg4.png",
+	"banerImg1.jpg",
+	"banerImg2.jpg",
+	"banerImg3.jpg",
+	"banerImg4.png",
 ];
 const banner = document.getElementById("BanerImg");
 let index = 0;
 function changeBanner(banner) {
 	console.log(banner.src);
 
-	banner.src = `./img/${imgArre[index]}`;
+	banner.src = `./img/banner/${imgArre[index]}`;
 	banner.alt = imgArre[index];
 	// banner.style.backgroundImage= `url('${imgArre[index]}')`;
 	index = ++index % imgArre.length;
