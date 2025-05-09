@@ -4,5 +4,5 @@
 js/node_modules/
 js/package.json
 js/package-lock.json
-img/testImg
+.vscode/
 bootstrap/
