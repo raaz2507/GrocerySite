@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product</title>
+    <link rel="stylesheet" href="./css/genralStyle.css">
     <link rel="stylesheet" href="./css/addProductStyle.css">
 </head>
 <body>
@@ -20,7 +21,7 @@
                 <label for="BrandName">Brand Name :&nbsp;</label>
                 <select name="BrandName" id="">
                     <optgroup label="no Brand">
-                        <option value="no Brand" selected> no Brand</option>
+                        <option value="NO_Brand" selected> no Brand</option>
                     </optgroup>
                     <optgroup label="Milk Product">
                         <option value="Amul">Amul</option>
@@ -42,12 +43,14 @@
                 <input type="number" min="1" name="quantity" id="" placeholder="quantity" style="width:25%">
                 <select name="unit" id="unit" required style="width:25%">
                     <optgroup label="Gram">
-                        <option value="kg">kilo Gram</option>
                         <option value="mg">Mili Gram</option>
+                        <option value="g">Gram</option>
+                        <option value="kg">kilo Gram</option>
+                        
                     </optgroup>
                     <optgroup label="Liquid">
-                        <option value="mili_liter ">Mili Liter</option>
-                        <option value="liter ">Liter</option>
+                        <option value="mL">Mili Liter</option>
+                        <option value="L">Liter</option>
                     </optgroup>
                     <optgroup label="number">
                         <option value="darjan ">darjan</option>
@@ -59,12 +62,12 @@
             <br>
             <span>
                 <label for="MRP">MRP :&nbsp</label>
-                <input type="number" min="1" name="MRP" id="" placeholder="MRP">
+                <input type="number" min="1" name="MRP" id="MRP" placeholder="Max Retail Price">
             </span>
             <br>
             <span>
                 <label for="FinalPrice">Final Price :&nbsp</label>
-                <input type="number" min="1" name="FinalPrice" id="" placeholder="Final price"><br>
+                <input type="number" min="1" name="FinalPrice" id="FianlPrice" placeholder="Final price"><br>
             </span>
             <span>
                 <label for="Discount">Discount :&nbsp</label>
@@ -76,6 +79,7 @@
                 <select name="Catagary" id="Catagary">
                     <option value="Fruts">Fruts</option>
                     <option value="Vegitable">vagitable</option>
+                    <option value="Milk_Product">Milk Product</option>
                 </select>
             </span>
             <br>
@@ -94,60 +98,20 @@
         <div id="imgPreConter"> 
             <!-- imgPreviewBox only show one image at a time as select in imgGrid -->
             <div id="imgPreviewBox">
-                <img src="./img/no_Imgae.jpg" alt="imagePrivew" id="imgPreview"><br>
+                <img src="./img/no_Imgae.jpg" alt="imagePrivew" id="imgPreview">
             </div>
             <div id="ImgGrid">
                 <!-- here show all imgae , its div and img tag genrtae by js for n number of image -->
-                <!-- <div><img src="./img/testImg/img1.jpg" alt="img1"></div>
-                <div><img src="./img/testImg/img2.jpg" alt="img2"></div>
-                <div><img src="./img/testImg/img3.jpg" alt="img3"></div>
-                <div><img src="./img/testImg/img4.jpg" alt="img4"></div>
-                <div><img src="./img/testImg/img5.jpg" alt="img5"></div>
-                <div><img src="./img/testImg/img6.jpg" alt="img5"></div> -->
+                <div class="ImgPreviewThem"><img src="./img/testImg/img1.jpg" alt="img1"></div>
+                <div class="ImgPreviewThem"><img src="./img/testImg/img2.jpg" alt="img2"></div>
+                <div class="ImgPreviewThem"><img src="./img/testImg/img3.jpg" alt="img3"></div>
+                <div class="ImgPreviewThem"><img src="./img/testImg/img4.jpg" alt="img4"></div>
+                <div class="ImgPreviewThem"><img src="./img/testImg/img5.jpg" alt="img5"></div>
+                <div class="ImgPreviewThem"><img src="./img/testImg/img6.jpg" alt="img5"></div>
             </div>
         </div>
     </div>
-<script>
-    document.getElementById("addImg").addEventListener("change", function (event) {
-    let imgPreview = document.getElementById("imgPreview");
-    let imgGrid = document.getElementById("ImgGrid");
-
-    // पहले से मौजूद ग्रिड को क्लियर करें (अगर आप नई इमेज जोड़ने पर पुरानी हटाना चाहते हैं)
-    imgGrid.innerHTML = "";
-
-    // फाइल सेलेक्ट करने पर
-    if (event.target.files.length > 0) {
-        let fileList = event.target.files;
-
-        for (let i = 0; i < fileList.length; i++) {
-            let file = fileList[i];
-            let reader = new FileReader();
-
-            reader.onload = function (e) {
-                // प्रीव्यू बॉक्स में पहली इमेज दिखाएं
-                if (i === 0) {
-                    imgPreview.src = e.target.result;
-                }
-
-                // इमेज ग्रिड में इमेज ऐड करें
-                let imgDiv = document.createElement("div");
-                let imgTag = document.createElement("img");
-                imgTag.src = e.target.result;
-                imgTag.alt = "Uploaded Image " + (i + 1);
-                imgTag.onclick = function () {
-                    imgPreview.src = this.src; // ग्रिड से क्लिक करने पर बड़ी इमेज बदले
-                };
-
-                imgDiv.appendChild(imgTag);
-                imgGrid.appendChild(imgDiv);
-            };
-
-            reader.readAsDataURL(file);
-        }
-    }
-});
-
-</script>
+<script src="./js/addProduct.js"></script>
 
 <?php include './php/main.php'; ?>
 </body>

@@ -24,7 +24,7 @@ class Dashbord {
 		productData.forEach((data) => {
 			const category = data.category;
 			const categoryColor = data.categoryColor;
-			const categoryId = category.replace(/\s+/g, '-'); // For ID-friendly name
+			const categoryId = category;//.replace(/\s+/g, '-'); // For ID-friendly name
 	
 			// Check if fragment exists, else create
 			if (!fragments[categoryId]) {
@@ -166,7 +166,7 @@ class Dashbord {
 			}
 		}
 
-		productImg.src = `./../img/ProductImages/${ProductId}/${ThumImage}` ;
+		productImg.src = `./img/ProductImages/${ProductId}/${ThumImage}` ;
 		console.log(productImg.src);
 		productImg.alt = altText;
 
@@ -262,16 +262,16 @@ class Dashbord {
 		function wishList(pid) {
 				console.log("Wish List button clicked for product:", pid);
 				
-				const fillIcon = 'heartFill.svg';
-				const emptyIcon = 'heartEmpty.svg';
+				const fillIcon = `./img/heartFill.svg`;
+				const emptyIcon = `./img/heartEmpty.svg`;
 				
 				const wishListIcon = button.querySelector("img");
 				// check current state
 				if (wishListIcon.src.includes(fillIcon)) {
-						wishListIcon.src = `./../img/${emptyIcon}`;
+						wishListIcon.src = emptyIcon;
 						wishListIcon.classList.remove("active");
 				} else {
-						wishListIcon.src = `./../img/${fillIcon}`;
+						wishListIcon.src = fillIcon;
 						wishListIcon.classList.add("active");
 
 						// optional: add pulse animation
@@ -436,7 +436,7 @@ class Dashbord {
 }
 
 const myDashbord = new Dashbord();
-
+console.log(window.location.pathname);
 /*
 
 
