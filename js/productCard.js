@@ -1,6 +1,4 @@
-
-
-class Dashbord {
+class DashbordForRowNav {
 	constructor(){
 		this.createCatagoryRowNavbar();
 		this.createRow();
@@ -54,41 +52,6 @@ class Dashbord {
 		}
 	}
 	
-	createRowOld() {
-		
-		const productData = this.getDataFromSQL();
-		//const {categoryColor, category}=productData;
-
-		const fruitsCard = document.getElementById("Fruits");
-		const fruits_fragment = document.createDocumentFragment();
-
-		const TestCard = document.getElementById("test");
-		const test_fragment = document.createDocumentFragment();
-
-		const vagitableCard = document.getElementById("Vegitables");
-		const vegi_fragment = document.createDocumentFragment();
-
-		const milkProCard = document.getElementById("Milk-Product");
-		const milkPro_fragment = document.createDocumentFragment();
-
-		productData.forEach((data) => {
-			let card = this.createProductCard(data);
-			if (data.category.toLowerCase() === "vegitable") {
-				vegi_fragment.appendChild(card);
-			} else if (data.category.toLowerCase() === "fruits") {
-				fruits_fragment.appendChild(card);
-			} else if (data.category.toLowerCase() === "milk_product") {
-				milkPro_fragment.appendChild(card);
-			} else {
-				test_fragment.appendChild(card);
-			}
-		});
-
-		fruitsCard.appendChild(fruits_fragment);
-		TestCard.appendChild(test_fragment);
-		vagitableCard.appendChild(vegi_fragment);
-		milkProCard.appendChild(milkPro_fragment);
-	}
 	createProductCard(ProdeuctData) {
 		const {ProductId, brand_name , product_name, mrp, final_price, Qty, unit} = ProdeuctData;
 		const {ThumImage, mainImage, OthImage, altText}=ProdeuctData;
@@ -167,10 +130,10 @@ class Dashbord {
 		}
 
 		productImg.src = `./img/ProductImages/${ProductId}/${ThumImage}` ;
-		console.log(productImg.src);
+		// console.log(productImg.src);
 		productImg.alt = altText;
 
-		wishBtn.innerHTML = `<img src="./img/heartEmpty.svg" alt="" class="wishIcon">`;
+		wishBtn.innerHTML = `<img src="./img/svgs/heartEmpty.svg" alt="" class="wishIcon">`;
 
 		imgFrame.appendChild(discountElemt);
 		imgFrame.appendChild(productImg);
@@ -268,10 +231,10 @@ class Dashbord {
 				const wishListIcon = button.querySelector("img");
 				// check current state
 				if (wishListIcon.src.includes(fillIcon)) {
-						wishListIcon.src = `./img/${emptyIcon}`;
+						wishListIcon.src = `./img/svgs/${emptyIcon}`;
 						wishListIcon.classList.remove("active");
 				} else {
-						wishListIcon.src = `./img/${fillIcon}`;
+						wishListIcon.src = `./img/svgs/${fillIcon}`;
 						wishListIcon.classList.add("active");
 
 						// optional: add pulse animation
@@ -434,10 +397,3 @@ class Dashbord {
 		];
 	}
 }
-
-const myDashbord = new Dashbord();
-console.log(window.location.pathname);
-/*
-
-
-*/

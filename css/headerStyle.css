@@ -44,21 +44,19 @@ header *{
 		border: nonw;
 	}
 
-	header .btnArea{
-
-	}
+	
 	header .btnArea .loginBtn{
 		font-size: 1.7rem;
 		padding: .5rem;
-		background-color: transparent;
-		border: none;
-		border-radius: 10px;
+		color: rgb(69, 115, 0);
+		/* background-color: transparent; */
+		/* border: none; */
+		/* border-radius: 10px; */
 		transition: transform .3s ease;
 	}
 
 	header .btnArea .loginBtn:hover{
-		color: rgb(69, 115, 0);
-		transform: scale(1.2);
+		transform: scale(1.1);
 	}
 
 	header .btnArea .cartBtn{
@@ -68,20 +66,23 @@ header *{
 		border-radius: 10px;
 		padding: 0.5rem;
 		color:white;
+		fill: white;
 	}
 	header .btnArea .cartBtn:hover{
 		background-color: white;
 		color: rgb(0, 200, 0);
+		fill: rgb(0, 200, 0);
 	}
 	header .btnArea .cartBtn .cartIcon:hover{
 		 animation: shakeCart 0.5s ease;
-    filter: brightness(0) saturate(100%) invert(36%) sepia(84%) saturate(508%) hue-rotate(74deg) brightness(97%) contrast(90%);
+    /* filter: brightness(0) saturate(100%) invert(36%) sepia(84%) saturate(508%) hue-rotate(74deg) brightness(97%) contrast(90%); */
 	}
+	/* 
 	header .btnArea .cartBtn .cartIcon{
 			width: 2rem;
 			margin-right: .2rem;
 			filter: brightness(0) invert(1);
-	}
+	}*/
 	header .btnArea{
 		padding: 0 1rem;
 	}
