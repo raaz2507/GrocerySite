@@ -12,6 +12,12 @@
 	object-fit:cover;
 	object-position: center;
 }
+.fadeOut{
+	animation: fadeAnimation 1s ease-in forwards ;
+}
+.fadeIn{
+	animation: fadeAnimation 1s ease-out backwards ;
+}
 .banner_area{
 	position: relative;
 }
@@ -39,5 +45,14 @@
 	}
 	.banner_area .bannerText{
 		font-size: 1rem;
+	}
+}
+
+
+@keyframes fadeAnimation{
+	from{
+		opacity: 1;
+	}to{
+		opacity: 0;
 	}
 }

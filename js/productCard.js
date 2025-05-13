@@ -1,3 +1,19 @@
+
+async function getDataFromSql(tableName= "products") {
+	try {
+		const res = await fetch(`/${tableName}`);
+		const data = await res.json();
+		
+		console.table(data);
+		return data;
+	} catch (err) {
+		console.error("Fetch Error", err);
+		// alert("Error fetching products");
+	}
+}
+async function getSqlData(tableName){
+	const res = await fetch(`/api/${tableName}`);
+}
 class DashbordForRowNav {
 	constructor(){
 		this.createCatagoryRowNavbar();
@@ -12,8 +28,8 @@ class DashbordForRowNav {
 		});
 
 	}
-	createRow() {
-		const productData = this.getDataFromSQL();
+	async createRow() {
+		const productData = await getDataFromSql("products") || getTestDataForCard();
 	
 		// Object to hold fragments per category
 		const fragments = {};
@@ -245,9 +261,9 @@ class DashbordForRowNav {
 		}
 	}
 
-	createCatagoryRowNavbar(){
+	async createCatagoryRowNavbar(){
 		const catagoryNavbar = document.getElementById("catagoryNavbar");
-		const catagoryData= getCatagoryData();
+		const catagoryData= await getDataFromSql("catagory") || getTestDataForCatagoryNavBar();
 
 		const fragment =document.createDocumentFragment();
 		catagoryData.forEach(data=>{
@@ -258,33 +274,6 @@ class DashbordForRowNav {
 		const ul=document.createElement('ul');
 		ul.appendChild(fragment);
 		catagoryNavbar.appendChild(ul);
-
-		function getCatagoryData(){
-			return   [{
-						id: 1,
-						categoryName: 'Fruits',
-						images: 'FruitThumbnail.png',
-						color: 'rgb(255, 166, 0)',
-						altText: 'Fruit Catagory'
-					},
-					{
-						id: 2,
-						categoryName: 'Vegitables',
-						images: 'VegetablesThumbnail.png',
-						color: 'rgb(34, 238, 34)',
-						altText: 'Vegetables Catagory'
-					},
-					{
-						id: 3,
-						categoryName: 'Milk_Product',
-						images: 'MilkProductThumbnail.png',
-						color: 'rgb(255, 239, 196)',
-						altText: 'MilkProduct Catagory'
-					}
-				];
-
-		}
-
 
 		function createNavbarCard(catagoryData){
 			const {categoryName, images, color, altText}=catagoryData;
@@ -306,94 +295,118 @@ class DashbordForRowNav {
 			return li;
 		}
 	}
-	
-
-	getDataFromSQL() {
-		return [
-			{
-				ProductId: 'prod_2',
-				brand_name: 'NO_Brand',
-				product_name: 'Fresh Apple',
-				mrp: '150.00',
-				final_price: '120.00',
-				Qty: 1,
-				unit: 'kg',
-				category: 'Fruits',
-				categoryColor: 'rgb(255, 166, 0)',
-				ThumImage: 'apple.jpg',
-				mainImage: 'apple.jpg',
-				OthImage: 'apple.jpg, apple.jpg'
+}
+function getTestDataForCatagoryNavBar(){
+	return [{
+				id: 1,
+				categoryName: 'Fruits',
+				images: 'FruitThumbnail.png',
+				color: 'rgb(255, 166, 0)',
+				altText: 'Fruit Catagory'
 			},
 			{
-				ProductId: 'prod_6',
-				brand_name: 'NO_Brand',
-				product_name: 'Banana',
-				mrp: '60.00',
-				final_price: '50.00',
-				Qty: 12,
-				unit: 'pice',
-				category: 'Fruits',
-				categoryColor: 'rgb(255, 166, 0)',
-				ThumImage: 'banana.jpg',
-				mainImage: 'banana.jpg',
-				OthImage: 'banana.jpg, banana.jpg'
+				id: 2,
+				categoryName: 'Vegitables',
+				images: 'VegetablesThumbnail.png',
+				color: 'rgb(34, 238, 34)',
+				altText: 'Vegetables Catagory'
 			},
 			{
-				ProductId: 'prod_3',
-				brand_name: 'NO_Brand',
-				product_name: 'Organic Potato',
-				mrp: '40.00',
-				final_price: '35.00',
-				Qty: 100,
-				unit: 'g',
-				category: 'Vegitables',
-				categoryColor: 'rgb(34, 238, 34)',
-				ThumImage: 'pineapple.jpg',
-				mainImage: 'pineapple.jpg',
-				OthImage: 'pineapple.jpg, pineapple.jpg'
-			},
-			{
-				ProductId: 'prod_1',
-				brand_name: 'Amul',
-				product_name: 'Amul Gold Milk',
-				mrp: '60.00',
-				final_price: '55.00',
-				Qty: 500,
-				unit: 'ml',
-				category: 'Milk_Product',
-				categoryColor: 'rgb(255, 239, 196)',
-				ThumImage: 'anuml500ml.jpg',
-				mainImage: 'anuml500ml.jpg',
-				OthImage: 'amul500ml_back.jpg, amul500ml_Discription.jpg'
-			},
-			{
-				ProductId: 'prod_4',
-				brand_name: 'MotherDairy',
-				product_name: 'Mother Dairy Butter',
-				mrp: '250.00',
-				final_price: '230.00',
-				Qty: 100,
-				unit: 'g',
-				category: 'Milk_Product',
-				categoryColor: 'rgb(255, 239, 196)',
-				ThumImage: 'strobary.jpg',
-				mainImage: 'strobary.jpg',
-				OthImage: 'strobary.jpg, strobary.jpg'
-			},
-			{
-				ProductId: 'prod_5',
-				brand_name: 'Amul',
-				product_name: 'paneer',
-				mrp: '80.00',
-				final_price: '80.00',
-				Qty: 100,
-				unit: 'g',
-				category: 'Milk_Product',
-				categoryColor: 'rgb(255, 239, 196)',
-				ThumImage: 'orange.jpg',
-				mainImage: 'orange.jpg',
-				OthImage: 'orange.jpg, orange.jpg'
+				id: 3,
+				categoryName: 'Milk_Product',
+				images: 'MilkProductThumbnail.png',
+				color: 'rgb(255, 239, 196)',
+				altText: 'MilkProduct Catagory'
 			}
 		];
-	}
 }
+function getTestDataForCard() {
+	return  [
+		{
+			ProductId: 'prod_2',
+			brand_name: 'NO_Brand',
+			product_name: 'Fresh Apple',
+			mrp: '150.00',
+			final_price: '120.00',
+			Qty: 1,
+			unit: 'kg',
+			category: 'Fruits',
+			categoryColor: 'rgb(255, 166, 0)',
+			ThumImage: 'apple.jpg',
+			mainImage: 'apple.jpg',
+			OthImage: 'apple.jpg, apple.jpg'
+		},
+		{
+			ProductId: 'prod_6',
+			brand_name: 'NO_Brand',
+			product_name: 'Banana',
+			mrp: '60.00',
+			final_price: '50.00',
+			Qty: 12,
+			unit: 'pice',
+			category: 'Fruits',
+			categoryColor: 'rgb(255, 166, 0)',
+			ThumImage: 'banana.jpg',
+			mainImage: 'banana.jpg',
+			OthImage: 'banana.jpg, banana.jpg'
+		},
+		{
+			ProductId: 'prod_3',
+			brand_name: 'NO_Brand',
+			product_name: 'Organic Potato',
+			mrp: '40.00',
+			final_price: '35.00',
+			Qty: 100,
+			unit: 'g',
+			category: 'Vegitables',
+			categoryColor: 'rgb(34, 238, 34)',
+			ThumImage: 'pineapple.jpg',
+			mainImage: 'pineapple.jpg',
+			OthImage: 'pineapple.jpg, pineapple.jpg'
+		},
+		{
+			ProductId: 'prod_1',
+			brand_name: 'Amul',
+			product_name: 'Amul Gold Milk',
+			mrp: '60.00',
+			final_price: '55.00',
+			Qty: 500,
+			unit: 'ml',
+			category: 'Milk_Product',
+			categoryColor: 'rgb(255, 239, 196)',
+			ThumImage: 'anuml500ml.jpg',
+			mainImage: 'anuml500ml.jpg',
+			OthImage: 'amul500ml_back.jpg, amul500ml_Discription.jpg'
+		},
+		{
+			ProductId: 'prod_4',
+			brand_name: 'MotherDairy',
+			product_name: 'Mother Dairy Butter',
+			mrp: '250.00',
+			final_price: '230.00',
+			Qty: 100,
+			unit: 'g',
+			category: 'Milk_Product',
+			categoryColor: 'rgb(255, 239, 196)',
+			ThumImage: 'strobary.jpg',
+			mainImage: 'strobary.jpg',
+			OthImage: 'strobary.jpg, strobary.jpg'
+		},
+		{
+			ProductId: 'prod_5',
+			brand_name: 'Amul',
+			product_name: 'paneer',
+			mrp: '80.00',
+			final_price: '80.00',
+			Qty: 100,
+			unit: 'g',
+			category: 'Milk_Product',
+			categoryColor: 'rgb(255, 239, 196)',
+			ThumImage: 'orange.jpg',
+			mainImage: 'orange.jpg',
+			OthImage: 'orange.jpg, orange.jpg'
+		}
+	];
+	
+}
+

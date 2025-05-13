@@ -25,8 +25,8 @@ INSERT INTO `Products` VALUES
 (3, 'prod_3', 'NO_Brand','Organic Potato',40.00,35.00,100, 'g','Vegitables',100, 'active', 'Fresh organic potatoes directly from farms.'),
 (4, 'prod_4', 'MotherDairy','Mother Dairy Butter',250.00,230.00, 100, 'g' , 'Milk_Product',100, 'active','Pure and creamy butter for daily use.'),
 (5, 'prod_5', 'Amul','paneer',80.00,80.00, 100, 'g', 'Milk_Product', 100, 'active', 'Pure and creamy butter for daily use.'),
-(6, 'prod_6', 'NO_Brand','Banana',60.00,50.00, 12, 'piece', 'Fruits', 100, 'active', 'Fresh and naturally ripened bananas.');
-
+(6, 'prod_6', 'NO_Brand','Banana',60.00,50.00, 12, 'piece', 'Fruits', 100, 'active', 'Fresh and naturally ripened bananas.'),
+(7, 'prod_7', "Auml", "Amul Buttor", 60.00, 58.00 , 100, 'g', 'Milk_Product', 2, 'active', "fresh Amul Butter for tasty Breds, and daal makni etc.");
 CREATE TABLE `catagory` (
   `id` smallint(6) NOT NULL COMMENT 'index',
   `categoryName` varchar(30) NOT NULL COMMENT 'Category Name',
@@ -57,8 +57,8 @@ INSERT INTO ProductImages (ProductId, ThumImage, mainImage, OthImage) VALUES
 ('prod_3', 'pineapple.jpg', 'pineapple.jpg', 'pineapple.jpg, pineapple.jpg'),
 ('prod_4', 'strobary.jpg', 'strobary.jpg', 'strobary.jpg, strobary.jpg'),
 ('prod_5', 'orange.jpg', 'orange.jpg', 'orange.jpg, orange.jpg'),
-('prod_6', 'banana.jpg', 'banana.jpg', 'banana.jpg, banana.jpg');
-
+('prod_6', 'banana.jpg', 'banana.jpg', 'banana.jpg, banana.jpg'),
+('prod_7', "amulButtor.jpg", "amulButtor.jpg", "amulButtor.jpg, amulButtorBack.jpg");
 CREATE VIEW ProductWithImages AS
 SELECT 
   p.ProductId,

@@ -1,15 +1,6 @@
 *{
-	/* border: 1px solid red; */
 	font-family: 'Okra', Helvetica;
 }
-
-#container{
-	background-color: blueviolet;
-	width:98%;
-	/* height: 100%; */
-	margin: 0 auto;
-}
-
 #loginNsingup_container{
 	background-color: rgba(0, 0, 0, 0.8);
 	width: 100vw;

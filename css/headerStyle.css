@@ -4,7 +4,7 @@ header *{
 	header{
 		width:95%;
 		margin: 0 auto;
-		padding: 1rem;
+		padding: 1rem 3rem;
 		border-radius: 10px;
 		background-color: antiquewhite;
 	}
@@ -25,7 +25,7 @@ header *{
 	header .searchBar input[type="search"]{
 		background-color: transparent;
 		font-size: 1.3rem;
-		padding: .5rem 1rem;
+		padding: .7rem 1rem;
 		border: none;
 		width: 90%;
 	}
@@ -35,6 +35,7 @@ header *{
 	header .searchBar .searchBTN{
 		background: transparent;
 		border: none;
+		padding: 0.5rem 0.5rem;
 	}
 
 	header .searchBar .searchBTN .searchIcon{
@@ -93,14 +94,14 @@ header *{
 		/* flex-wrap: wrap; */
 		gap: 8rem;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-evenly;
 	}
 
 	header .logoNTitle a{
 		display: flex;
 		align-items: center;
 		justify-content: space-evenly;
-
+		gap:2rem;
 	}
 
 	header .searchBar{
@@ -157,7 +158,9 @@ header *{
 			border-radius: 10px;
 			background-color: rgba(128, 128, 128, 0.4); */
 		}
-			
+		header .btnArea .cartBtn{
+			font-size: .91rem;
+		}
 	}
 	@keyframes shakeCart {
 		0%{ transform: rotate(4deg);}
