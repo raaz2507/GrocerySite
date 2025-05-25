@@ -1,5 +1,8 @@
+CREATE DATABASE grocery;
+use grocery;
+
 CREATE TABLE `Products` (
-    `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+    `id` smallint(5) UNSIGNED AUTO_INCREMENT,
     `ProductId` varchar(13) NOT NULL,
     `brand_name` varchar(50) DEFAULT 'NO_Brand',
     `product_name` varchar(100) DEFAULT NULL,
@@ -9,13 +12,12 @@ CREATE TABLE `Products` (
     `unit` VARCHAR(10) NOT NULL COMMENT 'mg, kg, ml, l, dergon, pair',
     `category` varchar(50) DEFAULT NULL,
     `stockQuntity` INT NOT NULL DEFAULT 0,
-    `status` ENUM('active','inactive') NOT NULL  DEFAULT('active'),
+    `status` ENUM('active','inactive') NOT NULL  DEFAULT 'active' ,
     `description` TEXT,
-    PRIMARY KEY (`Id`),
-    UNIQUE KEY `ProductId` (`ProductId`),
-    KEY `category` (`category`),
-    CONSTRAINT `Products_ibfk_1` FOREIGN KEY (`category`) REFERENCES `catagory` (`categoryName`),
-    CONSTRAINT `Products_ibfk_2` FOREIGN KEY (`unit`) REFERENCES `Units` (`unit_value`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`ProductId`),
+    CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`categoryName`),
+    CONSTRAINT `products_ibfk_2` FOREIGN KEY (`unit`) REFERENCES `Units` (`unit_value`)
 );
 
 
@@ -27,16 +29,18 @@ INSERT INTO `Products` VALUES
 (5, 'prod_5', 'Amul','paneer',80.00,80.00, 100, 'g', 'Milk_Product', 100, 'active', 'Pure and creamy butter for daily use.'),
 (6, 'prod_6', 'NO_Brand','Banana',60.00,50.00, 12, 'piece', 'Fruits', 100, 'active', 'Fresh and naturally ripened bananas.'),
 (7, 'prod_7', "Auml", "Amul Buttor", 60.00, 58.00 , 100, 'g', 'Milk_Product', 2, 'active', "fresh Amul Butter for tasty Breds, and daal makni etc.");
-CREATE TABLE `catagory` (
+
+CREATE TABLE `category` (
   `id` smallint(6) NOT NULL COMMENT 'index',
   `categoryName` varchar(30) NOT NULL COMMENT 'Category Name',
   `images` varchar(50) DEFAULT NULL COMMENT 'Thumbnail Image for catogroy',
   `color` varchar(25) DEFAULT NULL COMMENT 'Row color for cotagory row',
-  `altText` varchar(20) NOT NULL DEFAULT 'catagory Image' COMMENT 'alternet text for img tag'
+  `altText` varchar(20) NOT NULL DEFAULT 'catagory Image' COMMENT 'alternet text for img tag',
+  UNIQUE KEY (`categoryName`)
 )  COMMENT 'This Table is contains Product Category name, their thumb image, and color for row';
 
 
-INSERT INTO `catagory` (`id`, `categoryName`, `images`, `color`, `altText`) VALUES
+INSERT INTO `category` (`id`, `categoryName`, `images`, `color`, `altText`) VALUES
 (1, 'Fruits', 'FruitThumbnail.png', 'rgb(255, 166, 0)', 'Fruit Catagory'),
 (2, 'Vegitables', 'VegetablesThumbnail.png', 'rgb(34, 238, 34)', 'Vegetables Catagory'),
 (3, 'Milk_Product', 'MilkProductThumbnail.png', 'rgb(255, 239, 196)', 'MilkProduct Catagory');
@@ -75,7 +79,7 @@ SELECT
   pi.OthImage
 FROM Products p
 INNER JOIN ProductImages pi ON p.ProductId = pi.ProductId
-INNER JOIN catagory c ON p.category = c.categoryName;
+INNER JOIN category c ON p.category = c.categoryName;
 
 
 CREATE TABLE Units (
@@ -135,10 +139,9 @@ CREATE TABLE IF NOT EXISTS users(
    Email VARCHAR(50),
    phoneNumber VARCHAR(10) NOT NULL DEFAULT '9891000000',
    addrId VARCHAR(10) NOT NULL UNIQUE ,
-   CONSTRAINT `usrId_Fk` FOREIGN KEY (usrId) REFERENCES users(`usrId`),
    CONSTRAINT `addrid_fk_u` FOREIGN KEY (addrId) REFERENCES addresses(addrId)
 );
-INSERT INTO users (`usrId`, `nameId`, `Email`, `addrId`) VALUES
+INSERT INTO users (`usrId`, `naamId`, `Email`, `addrId`) VALUES
 ('usr_1', 'naam_1', 'nehaKhan@gmail.com', 'addr_1');
 
 CREATE TABLE IF NOT EXISTS user_role(

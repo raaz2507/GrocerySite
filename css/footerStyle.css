@@ -33,15 +33,15 @@
 			width:3rem;
 			fill: white;
 		}
-		footer .usefullLink{
+		footer .usefulLinks{
 			padding:1rem;
 			font-size: larger;
 			line-height: 150%;
 		}
-		footer .usefullLink ul{
+		footer .usefulLinks ul{
 			list-style: none;
 		}
-		footer .usefullLink ul a{
+		footer .usefulLinks ul a{
 			text-decoration: none;
 		}
 
@@ -85,7 +85,7 @@
 			footer .LogoNTitle .siteTitle{
 				/* width: max-content; */
 			} 
-			footer .usefullLink{
+			footer .usefulLinks{
 				text-align: center;
 				padding: 0;
 			}
