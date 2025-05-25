@@ -138,9 +138,9 @@ header *{
 			align-items: stretch;
 			gap:1rem;
 		}
-		/* header .logoNTitle{
+		header .logoNTitle{
 			flex: 1 0 100%;
-		} */
+		} 
 		header .logoNTitle{
 			gap:0.1rem;
 		}

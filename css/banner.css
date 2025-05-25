@@ -13,10 +13,10 @@
 	object-position: center;
 }
 .fadeOut{
-	animation: fadeAnimation 1s ease-in forwards ;
+	animation: fadeOut 1s ease-in forwards ;
 }
 .fadeIn{
-	animation: fadeAnimation 1s ease-out backwards ;
+	animation: fadeIn 1s ease-out forwards ;
 }
 .banner_area{
 	position: relative;
@@ -41,6 +41,7 @@
 
 @media only screen and (max-width:1000px){
 	.banner_area{
+		width:95%;
 		aspect-ratio: 2/1;
 	}
 	.banner_area .bannerText{
@@ -49,10 +50,18 @@
 }
 
 
-@keyframes fadeAnimation{
+@keyframes fadeOut{
 	from{
 		opacity: 1;
 	}to{
 		opacity: 0;
+	}
+}
+
+@keyframes fadeIn{
+	from{
+		opacity: 0;
+	}to{
+		opacity: 1;
 	}
 }

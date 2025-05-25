@@ -1,11 +1,12 @@
+@import url('genralStyle.css');
 *{
 	font-family: 'Okra', Helvetica;
 }
 #loginNsingup_container{
 	background-color: rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(3px);
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	position: absolute;
 	top:0;
 	left:0;

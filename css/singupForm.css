@@ -91,9 +91,21 @@ position: absolute;
 	justify-content: center;
 }
 #singup_container #nameInputArea div{
-	flex: 1;
+	flex: 1 ;
+}
+
+/* ===== flex setting end ==== */
+@media only screen and (max-width:1000px){
+	#singup_container{
+		width:95%;
+	}
+	#singup_container #nameInputArea div, #singup_container  #contact div{
+		flex: 0 0 100% ;
+	}
+	#addressInputArea div{
+		flex: 1;
+	}
 }
 
 
-/* ===== flex setting end ==== */
 /* === singup styling end === */

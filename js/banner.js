@@ -5,7 +5,7 @@ class DashbordForBanner{
 		
 	}
 
-	startBanner(){
+	startBanner() {
 		const imgArre = [
 			"banerImg1.jpg",
 			"banerImg2.jpg",
@@ -14,17 +14,29 @@ class DashbordForBanner{
 		];
 
 		const banner = document.getElementById("BanerImg");
-		
-		setInterval(changeBanner, 2000);
-		
+
 		let index = 0;
-		function changeBanner() {
-			// console.log(banner.src);
-		
-			banner.src = `./img/banner/${imgArre[index]}`;
-			banner.alt = imgArre[index];
-			index = ++index % imgArre.length;
-		}	
+
+		setInterval(() => {
+			// Pehle purani animation class hatao
+			banner.classList.remove("fadeIn", "fadeOut");
+
+			// Fade out start karo
+			banner.classList.add("fadeOut");
+
+			setTimeout(() => {
+				// Image badlo
+				banner.src = `./img/banner/${imgArre[index]}`;
+				banner.alt = imgArre[index];
+
+				// Index update
+				index = (index + 1) % imgArre.length;
+
+				// Fade in lagao naye image pe
+				banner.classList.remove("fadeOut");
+				banner.classList.add("fadeIn");
+			}, 0); // thoda wait karo fadeOut ke liye
+		}, 3000); // har 3 sec mein change ho
 	}
 }
 
