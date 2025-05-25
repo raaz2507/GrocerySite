@@ -18,6 +18,7 @@ class longinNsingupDeshbord{
 		this.pwdInput = loginForm["pwd"];
 		
 		this.submitBtn = document.getElementById("submitBtn");
+		this.singupBtn = document.getElementById("singupBtn");
 	}
 
 	setEventLisner(){
@@ -40,10 +41,12 @@ class longinNsingupDeshbord{
 				}
 			}
 		});
+
+		
 	
 	}
 	setFormEventLisners(){
-		const { loginForm, phoneInput, pwdInput}=this;
+		const { loginForm, phoneInput, pwdInput, singupBtn}=this;
 			/* ==== Form Related start ==== */
 			document.getElementsByClassName("pwdViewIcon")[0].addEventListener("click", function(event){
 				const eyeOpen = `./img/svgs/eye-open.svg`;
@@ -67,8 +70,11 @@ class longinNsingupDeshbord{
 				event.preventDefault(); // पेज reload ना हो
 				validateUser();
 			});
+			singupBtn.addEventListener('click', ()=>{
+				loginNsingup_container.innerHTML =this.#addSingupForm();
+			});
 			
-			
+
 			function validateInputs(){
 				// console.log("validateing input");
 				phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '');
@@ -88,12 +94,13 @@ class longinNsingupDeshbord{
 			}
 			/* ==== form related End ====*/  
 	}
+	
 	#addloginForm(){
 		return `<div class="loginContainer">
 					
 					<img src="./img/site/siteTitle.svg" alt="site Title">
 					<p class="tagLine">Jhatpat Mangao</p>
-					<p> Login or <a href="#">Signup</a></p>
+					<p> Login or <button id="singupBtn">Signup</button></p>
 					<form id="loginForm" action="" >
 						<div class="phoneNum_container"><p>+91</p>
 							<input type="text" name="phoneNum"  placeholder="Phone Number"  required>
@@ -108,5 +115,71 @@ class longinNsingupDeshbord{
 					</form>
 					<p class="term_condition">By continuing, you agree to our <a href="#">Terms of service</a> & <a href="#">Privacy policy</a></p>
 				</div>`;
+	}
+
+	#addSingupForm(){
+		return `
+		<div id="singup_container">
+				<form action="" id="singupForm">
+					<h1 class="form-Title">Singup Form</h1>
+					
+					<fieldset id="nameInputArea"  >
+						<legend class="titles">Name</legend>
+						<div class="input-field">
+							<input type="text" name="name" id="first_name" class="input-box" placeholder="">
+							<label for="first_name">First Name</label>
+						</div>
+						<div class="input-field">
+							<input type="text" name="name" id="mid_name" class="input-box" placeholder="">
+							<label for="min_name">Mid Name</label>
+						</div>
+						<div class="input-field">
+							<input type="text" name="name" id="last_name" class="input-box" placeholder="">
+							<label for="last_name">Last Name</label>
+						</div>
+						
+					</fieldset>
+					
+					<fieldset id="addressInputArea" >
+						<legend class="titles">Address</legend>
+						<div class="input-field" style="width:10rem;">
+							<input type="text" name="address" id="houseNum" class="input-box" placeholder="">
+							<label for="houseNum">House Number</label>
+						</div>
+						<div class="input-field" style="width:5rem;">
+							<input type="text" name="Block" id="Block" class="input-box" placeholder="">
+							<label for="Block">Block</label>
+						</div>
+						<div class="input-field" style="width:auto; min-width:13rem;">
+							<input type="text" name="city" class="input-box" placeholder="">
+							<label for="city" >City</label>
+						</div>
+						<div class="input-field" style="width:auto; min-width:13rem;">
+							<input type="text" name="state" id="state" class="input-box" placeholder="">
+							<label for="state">State</label>
+						</div>
+						<div class="input-field" style="width:15rem;">
+							<input type="text" name="pinCode" id="pinCode"  maxlength="6" inputmode="numeric" title="..." class="input-box" placeholder=""/>
+							<label for="pinCode">Pin Code</label>
+						</div>
+						
+					</fieldset>
+					
+					<fieldset id="contact">
+						<legend class="titles">Contact</legend>
+						<div id="EmailInputArea" class="input-field" style="width:48%;">
+							<input type="text" name="email" class="input-box" placeholder=" ">
+							<label for="email">E-Mail</label>
+						</div>
+						<div id="phoneInputArea" class="input-field" style="width:48%;">
+							<input type="text" name="phNum" class="input-box" maxlength="10" inputmode="numeric" title="..."  placeholder="" >
+							<label for="phNum">Phone Number</label>
+						</div>
+					</fieldset>
+					
+					<button type="submit">continue</button>
+				</form>
+			</div>
+		`;
 	}
 }
