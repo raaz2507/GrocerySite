@@ -34,7 +34,10 @@ class longinNsingupDeshbord{
 			}
 		});
 		loginNsingup_container.addEventListener("click", (event)=>{
-	
+			console.log(event.target.id);
+			if (event.target.id === "loginNsingup_container"){
+				console.log("y");
+			}
 			if (event.target === loginNsingup_container){
 				if (!event.target.classList.contains("hide")){
 					event.target.classList.add("hide");
@@ -70,6 +73,8 @@ class longinNsingupDeshbord{
 				event.preventDefault(); // पेज reload ना हो
 				validateUser();
 			});
+
+
 			singupBtn.addEventListener('click', ()=>{
 				loginNsingup_container.innerHTML =this.#addSingupForm();
 			});
@@ -126,16 +131,16 @@ class longinNsingupDeshbord{
 					<fieldset id="nameInputArea"  >
 						<legend class="titles">Name</legend>
 						<div class="input-field">
-							<input type="text" name="name" id="first_name" class="input-box" placeholder="">
 							<label for="first_name">First Name</label>
+							<input type="text" name="name" id="first_name" class="input-box" placeholder=" ">
 						</div>
 						<div class="input-field">
-							<input type="text" name="name" id="mid_name" class="input-box" placeholder="">
 							<label for="min_name">Mid Name</label>
+							<input type="text" name="name" id="mid_name" class="input-box" placeholder=" ">
 						</div>
 						<div class="input-field">
-							<input type="text" name="name" id="last_name" class="input-box" placeholder="">
 							<label for="last_name">Last Name</label>
+							<input type="text" name="name" id="last_name" class="input-box" placeholder=" ">
 						</div>
 						
 					</fieldset>
@@ -143,24 +148,24 @@ class longinNsingupDeshbord{
 					<fieldset id="addressInputArea" >
 						<legend class="titles">Address</legend>
 						<div class="input-field" style="width:10rem;">
-							<input type="text" name="address" id="houseNum" class="input-box" placeholder="">
 							<label for="houseNum">House Number</label>
+							<input type="text" name="address" id="houseNum" class="input-box" placeholder="">
 						</div>
 						<div class="input-field" style="width:5rem;">
-							<input type="text" name="Block" id="Block" class="input-box" placeholder="">
 							<label for="Block">Block</label>
+							<input type="text" name="Block" id="Block" class="input-box" placeholder="">
 						</div>
 						<div class="input-field" style="width:auto; min-width:13rem;">
-							<input type="text" name="city" class="input-box" placeholder="">
 							<label for="city" >City</label>
+							<input type="text" name="city" class="input-box" placeholder="">
 						</div>
 						<div class="input-field" style="width:auto; min-width:13rem;">
-							<input type="text" name="state" id="state" class="input-box" placeholder="">
 							<label for="state">State</label>
+							<input type="text" name="state" id="state" class="input-box" placeholder="">
 						</div>
 						<div class="input-field" style="width:15rem;">
-							<input type="text" name="pinCode" id="pinCode"  maxlength="6" inputmode="numeric" title="..." class="input-box" placeholder=""/>
 							<label for="pinCode">Pin Code</label>
+							<input type="text" name="pinCode" id="pinCode"  maxlength="6" inputmode="numeric" title="..." class="input-box" placeholder=""/>
 						</div>
 						
 					</fieldset>
@@ -168,15 +173,25 @@ class longinNsingupDeshbord{
 					<fieldset id="contact">
 						<legend class="titles">Contact</legend>
 						<div id="EmailInputArea" class="input-field" style="width:48%;">
-							<input type="text" name="email" class="input-box" placeholder=" ">
 							<label for="email">E-Mail</label>
+							<input type="text" name="email" class="input-box" placeholder=" ">
 						</div>
 						<div id="phoneInputArea" class="input-field" style="width:48%;">
-							<input type="text" name="phNum" class="input-box" maxlength="10" inputmode="numeric" title="..."  placeholder="" >
 							<label for="phNum">Phone Number</label>
+							<input type="text" name="phNum" class="input-box" maxlength="10" inputmode="numeric" title="..."  placeholder="" >
 						</div>
 					</fieldset>
-					
+					<fieldset id="pwd">
+						<legend class="titles">Password</legend>
+						<div class="input-field">
+							<label for="pwdEnter">Password</label>
+							<input type="password" name="pwdEnter" id="pwdEnter" class="input-box">
+						</div>
+						<div class="input-field">
+							<label for="pwdReEnter">Reenter password</label>
+							<input type="password" name="pwdReEnter" id="pwdReEnter" class="input-box">
+						</div>
+					</fieldset>
 					<button type="submit">continue</button>
 				</form>
 			</div>

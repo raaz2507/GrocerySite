@@ -204,8 +204,15 @@ class DashbordForRowNav {
 
 
 	eventOnItemCategory(event){
+		const container= event.target.closest(".productContaner");
+		
+		if (container){
+			console.log(container.id);
+			const productId = container.id;
+			// Redirect to product detail page
+			window.location.href = `prodectPage.html?id=${productId}`
+		}
 		const button = event.target.closest("button");
-
 		if (button) {
 				const productDiv = button.closest(".productContaner");
 				const productId = productDiv?.id;
