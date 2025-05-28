@@ -10,10 +10,11 @@ CREATE TABLE `Products` (
     `final_price` decimal(10, 2) DEFAULT NULL,
     `Qty` INT NOT NULL DEFAULT 0 COMMENT 'add quntity here',
     `unit` VARCHAR(10) NOT NULL COMMENT 'mg, kg, ml, l, dergon, pair',
+    `limits` SMALLINT(2) UNSIGNED NOT NULL DEFAULT 1,
     `category` varchar(50) DEFAULT NULL,
     `stockQuntity` INT NOT NULL DEFAULT 0,
     `status` ENUM('active','inactive') NOT NULL  DEFAULT 'active' ,
-    `description` TEXT,
+    `describes` TEXT,
     PRIMARY KEY (`id`),
     UNIQUE KEY (`ProductId`),
     CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`categoryName`),
@@ -22,13 +23,13 @@ CREATE TABLE `Products` (
 
 
 INSERT INTO `Products` VALUES
-(1, 'prod_1', 'Amul','Amul Gold Milk',60.00,55.00, 500, 'ml', 'Milk_Product', 100, 'active','Full cream milk for daily use.'),
-(2, 'prod_2', 'NO_Brand','Fresh Apple',150.00,120.00, 1, 'kg','Fruits',100, 'active','High-quality fresh apples from Kashmir.'),
-(3, 'prod_3', 'NO_Brand','Organic Potato',40.00,35.00,100, 'g','Vegitables',100, 'active', 'Fresh organic potatoes directly from farms.'),
-(4, 'prod_4', 'MotherDairy','Mother Dairy Butter',250.00,230.00, 100, 'g' , 'Milk_Product',100, 'active','Pure and creamy butter for daily use.'),
-(5, 'prod_5', 'Amul','paneer',80.00,80.00, 100, 'g', 'Milk_Product', 100, 'active', 'Pure and creamy butter for daily use.'),
-(6, 'prod_6', 'NO_Brand','Banana',60.00,50.00, 12, 'piece', 'Fruits', 100, 'active', 'Fresh and naturally ripened bananas.'),
-(7, 'prod_7', "Auml", "Amul Buttor", 60.00, 58.00 , 100, 'g', 'Milk_Product', 2, 'active', "fresh Amul Butter for tasty Breds, and daal makni etc.");
+(1, 'prod_1', 'Amul','Amul Gold Milk',60.00,55.00, 500, 'ml', 3,'Milk_Product', 100, 'active','Full cream milk for daily use.'),
+(2, 'prod_2', 'NO_Brand','Fresh Apple',150.00,120.00, 1, 'kg', 2, 'Fruits',100, 'active','High-quality fresh apples from Kashmir.'),
+(3, 'prod_3', 'NO_Brand','Organic Potato',40.00,35.00,100, 'g',1, 'Vegitables',100, 'active', 'Fresh organic potatoes directly from farms.'),
+(4, 'prod_4', 'MotherDairy','Mother Dairy Butter',250.00,230.00, 100, 'g' , 5, 'Milk_Product',100, 'active','Pure and creamy butter for daily use.'),
+(5, 'prod_5', 'Amul','paneer',80.00,80.00, 100, 'g', 3, 'Milk_Product', 100, 'active', 'Pure and creamy butter for daily use.'),
+(6, 'prod_6', 'NO_Brand','Banana',60.00,50.00, 12, 'piece', 2, 'Fruits', 100, 'active', 'Fresh and naturally ripened bananas.'),
+(7, 'prod_7', "Auml", "Amul Buttor", 60.00, 58.00 , 100, 'g', 3, 'Milk_Product', 2, 'active', "fresh Amul Butter for tasty Breds, and daal makni etc.");
 
 CREATE TABLE `category` (
   `id` smallint(6) NOT NULL COMMENT 'index',
@@ -72,11 +73,13 @@ SELECT
   p.final_price,
   p.Qty,
   p.unit,
+  p.limits,
   p.category,
   c.color AS categoryColor,
   pi.ThumImage,
   pi.mainImage,
-  pi.OthImage
+  pi.OthImage,
+  p.describes
 FROM Products p
 INNER JOIN ProductImages pi ON p.ProductId = pi.ProductId
 INNER JOIN category c ON p.category = c.categoryName;

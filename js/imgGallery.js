@@ -108,60 +108,63 @@ class ProductImgGallery{
 	#navigateImgage(event){
 		const {thumRow} =this.#elemts;
 		const clicked =event.target;
-		
-		if (clicked.parentElement.classList.contains("thumImgBox") && clicked.tagName === 'IMG'){
+		const thumbImgBox = event.target.closest(".thumImgBox");
+		const navBarBtn = event.target.closest(".navBtn");
+	
+		if (thumbImgBox){
 			this.#updateProductDisImg(clicked);	
 			this.#setSelection(clicked, true);
-		}
-		
-	
-		if (clicked.classList.contains("leftNavBtn")){
-			console.log("left");
-			const current =	getSelection();
-			let prev = current.previousElementSibling;
-			while (prev && !prev.classList.contains("thumImgBox")){
-				next = next.nextElementSibling;
-			}
-
-			//agar preves elemet nahi milta to first elemet par le jata hai
-			if (!prev){
-				prev = thumRow.lastElementChild;
-				while(prev && !prev.classList.contains("thumImgBox")){
-					prev = prev.previousElementSibling;
-				}
-			}
-			//prev elemet set hone par usko change karta hai
-			if(prev){
-				const img = prev.querySelector("img");
-				this.#updateProductDisImg(img);
-				this.#setSelection(prev);
-			}
-			
-		}else if (clicked.classList.contains("rightNavBtn")){
-			const current =	getSelection();
-			let next = current.nextElementSibling;
-			
-			while (next && !next.classList.contains("thumImgBox")){
-				/*ye loop tab run kargea jab tak ise next div nahi mil jata jo "thumImgBox" class liye ho
-			(yeha inshore karta hai jo bhi next select ho vo thumImgBox hi ho)
-				*/  
-				next= next.nextElementSibling;
-
-			}
-			if(!next){
-				next= thumRow.firstElementChild;
-				while(next && !next.classList.contains("thumImgBox")){
+		}else if(navBarBtn ){
+			if (navBarBtn.classList.contains("leftNavBtn")){
+				const current =	getSelection();
+				let prev = current.previousElementSibling;
+				while (prev && !prev.classList.contains("thumImgBox")){
 					next = next.nextElementSibling;
 				}
 
-			}
+				//agar preves elemet nahi milta to first elemet par le jata hai
+				if (!prev){
+					prev = thumRow.lastElementChild;
+					while(prev && !prev.classList.contains("thumImgBox")){
+						prev = prev.previousElementSibling;
+					}
+				}
+				//prev elemet set hone par usko change karta hai
+				if(prev){
+					const img = prev.querySelector("img");
+					this.#updateProductDisImg(img);
+					this.#setSelection(prev);
+				}
+				
+			}else if (navBarBtn.classList.contains("rightNavBtn")){
+				const current =	getSelection();
+				let next = current.nextElementSibling;
+				
+				while (next && !next.classList.contains("thumImgBox")){
+					/*ye loop tab run kargea jab tak ise next div nahi mil jata jo "thumImgBox" class liye ho
+				(yeha inshore karta hai jo bhi next select ho vo thumImgBox hi ho)
+					*/  
+					next= next.nextElementSibling;
 
-			if (next){
-				const img =next.querySelector("img");
-				this.#updateProductDisImg(img);
-				this.#setSelection(next);
+				}
+				if(!next){
+					next= thumRow.firstElementChild;
+					while(next && !next.classList.contains("thumImgBox")){
+						next = next.nextElementSibling;
+					}
+
+				}
+
+				if (next){
+					const img =next.querySelector("img");
+					this.#updateProductDisImg(img);
+					this.#setSelection(next);
+				}
 			}
 		}
+		
+		
+		
 
 		function getSelection(){
 			for (const ele of thumRow.children){
