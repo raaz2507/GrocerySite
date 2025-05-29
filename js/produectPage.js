@@ -55,12 +55,12 @@
 
     // अब सारे elements को set करो 💚
     for (const [element, value] of mapValues) {
-			if (element === mrpValue || element === discount){
-				if (mrp == final_price){
-					element.remove();
-				}
+			if (!element) continue;
+			const isMrpOrDiscount = element.classList.contains("mrpValue") || element.classList.contains("discount");
+			if (isMrpOrDiscount && mrp === final_price){
+				element.remove();
 			}else {
-				if (element) element.innerHTML = value;
+				element.innerHTML = value;
 			}
     }
 

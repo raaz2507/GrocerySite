@@ -17,7 +17,7 @@ async function getSqlData(tableName){
 class DashbordForRowNav {
 	
 	constructor(data){
-		const {productDataList, oneProduct,categoryData} = data;
+		const {productDataList, oneProduct, categoryData} = data;
 		this.createCatagoryRowNavbar(categoryData);
 		this.createRow(productDataList);
 		this.setEventsOnElemets();
@@ -32,49 +32,107 @@ class DashbordForRowNav {
 	}
 	async createRow(productTestDataList) {
 		const productData = await getDataFromSql("products") || productTestDataList;
-	
-		// Object to hold fragments per category
+
 		const fragments = {};
-		const categoryDiv={};
 		const ItemCategory = document.getElementById("ItemCategory");
-		productData.forEach((data) => {
-			const category = data.category;
-			const categoryColor = data.categoryColor;
-			const categoryId = category;//.replace(/\s+/g, '-'); // For ID-friendly name
 	
-			// Check if fragment exists, else create
+		const catagoryDiv={}; 
+		// पहले सारे categoryDivs बना लो
+		productData.forEach((data) => {
+			const categoryId = data.category;
+
+			// अगर category का div नहीं है तो उसे create करो
+			/*ye if check kar raha hi ki catagoryId pahale se list me hai ya nahi*/ 
+			if (!catagoryDiv[categoryId]) {
+				catagoryDiv[categoryId]= document.getElementById(categoryId);
+				/* fir doosre div me check karta hai ki document me bhi nahi hai*/ 
+				if (!catagoryDiv[categoryId]){
+					catagoryDiv[categoryId] = createCategoryRow(data);
+				}
+			}
+
+			// Fragment मौजूद ना हो तो बनाओ
 			if (!fragments[categoryId]) {
 				fragments[categoryId] = document.createDocumentFragment();
 			}
-	
-			let card = this.createProductCard(data);
+
+			// Product card बनाकर fragment में डालो
+			const card = this.createProductCard(data);
 			fragments[categoryId].appendChild(card);
-			
-			// Check if div exists, else create and style it
-			let categoryDiv = document.getElementById(categoryId);
-			if (!categoryDiv) {
-				categoryDiv = document.createElement("div");
-				categoryDiv.id = categoryId;
-				categoryDiv.className = "category";
-				categoryDiv.style.backgroundColor = categoryColor;
-				categoryDiv.innerHTML = `<div class="categoryTitleDiv"><p class="categoryTitle">${category}</p></div>`;
-				ItemCategory.appendChild(categoryDiv); // Append to body or specific container
-			}
 		});
 		
+		// अब fragments को उनके related div में append करो
+		for (const catId in fragments) {
+			//const categoryDiv = document.getElementById(categoryId);
+			console.log(catId);
+			if (catagoryDiv[catId]) {
+				catagoryDiv[catId].appendChild(fragments[catId]);
+			}
+		}
 
-		// Finally, append all fragments to their respective divs
-		for (let catId in fragments) {
-			let targetDiv = document.getElementById(catId);
-			targetDiv.appendChild(fragments[catId]);
+		// Category section create करने का helper function
+		function createCategoryRow(data) {
+			const NewCategoryDiv = document.createElement("div");
+			NewCategoryDiv.id = data.category;
+			NewCategoryDiv.className = "category";
+			NewCategoryDiv.style.backgroundColor = data.categoryColor;
+
+			NewCategoryDiv.innerHTML = `
+				<div class="categoryTitleDiv">
+					<p class="categoryTitle">${data.category}</p>
+				</div>
+			`;
+			ItemCategory.appendChild(NewCategoryDiv);
+			return NewCategoryDiv;
 		}
 	}
+
+	// async createRow(productTestDataList) {
+	// 	const productData = await getDataFromSql("products") || productTestDataList;
+	
+	// 	// Object to hold fragments per category
+	// 	const fragments = {};
+		
+	// 	const ItemCategory = document.getElementById("ItemCategory");
+	// 	productData.forEach((data) => {
+	// 		const categoryId = data.category;//.replace(/\s+/g, '-'); // For ID-friendly name
+			
+	// 		// Check if fragment exists, else create
+	// 		if (!fragments[categoryId]) {
+	// 			fragments[categoryId] = document.createDocumentFragment();
+	// 		}
+	// 		console.log(data.category);
+	// 		let card = this.createProductCard(data);
+	// 		fragments[categoryId].appendChild(card);
+			
+	// 		// Check if div exists, else create and style it
+	// 		let categoryDiv = document.getElementById(categoryId);
+	// 		if (!categoryDiv) {
+	// 			createCatagoryRow(data);
+	// 		}
+	// 	});
+		
+
+	// 	// Finally, append all fragments to their respective divs
+	// 	for (let catId in fragments) {
+	// 		let targetDiv = document.getElementById(catId);
+	// 		targetDiv.appendChild(fragments[catId]);
+	// 	}
+	// 	function createCatagoryRow(data){
+			
+	// 		const categoryDiv = document.createElement("div");
+	// 		categoryDiv.id = data.category;
+	// 		categoryDiv.className = "category";
+	// 		categoryDiv.style.backgroundColor = data.categoryColor;
+	// 		categoryDiv.innerHTML = `<div class="categoryTitleDiv"><p class="categoryTitle">${data.category}</p></div>`;
+	// 		ItemCategory.appendChild(categoryDiv); // Append to body or specific container
+	// 	}
+	// }
 	
 	createProductCard(ProdeuctData) {
 		const elementMap = getElementsMap();
 			Object.freeze(elementMap);
 			Object.freeze(elementMap.container);
-		
 		
 		const element = createElementsFromMap(elementMap);
 			Object.freeze(element);
@@ -225,7 +283,6 @@ class DashbordForRowNav {
 			container.appendChild(proDetails);
 			container.appendChild(CartBtn);
 		}
-		
 	}
 
 
