@@ -1,4 +1,4 @@
-const staticData={
+export const staticData={
 	categoryData:[{
 				id: 1,
 				categoryName: 'Fruits',

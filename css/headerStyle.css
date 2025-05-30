@@ -50,8 +50,8 @@ header *{
 		font-size: .8rem;
 		padding: .5rem;
 		color: rgb(69, 115, 0);
-		/* background-color: transparent; */
-		/* border: none; */
+		background-color: transparent;
+		border: none;
 		/* border-radius: 10px; */
 		transition: transform .3s ease;
 	}
@@ -59,31 +59,50 @@ header *{
 		width:2rem;
 		fill: rgb(69, 115, 0);
 	}
-	header .btnArea .loginBtn svg:hover{
+	header .btnArea .loginBtn:hover svg{
 		animation: shakeCart 0.5s ease;
-	}
-	header .btnArea .loginBtn:hover{
 		transform: scale(1.1);
 	}
+	
 
 	header .btnArea .cartBtn{
 		width:max-content;
 		font-size: .8rem;
-		background-color: rgb(0, 200, 0);
-		border-radius: 10px;
+		/* background-color: rgb(0, 200, 0); */
+		background-color: transparent;
+		border:none;
+		/* border-radius: 10px; */
 		padding: 0.5rem;
-		color:white;
-		fill: white;
+		color:green;
+		fill: green;
+		position: relative;
 	}
-	header .btnArea .cartBtn:hover{
-		background-color: white;
+	header .btnArea .cartBtn .cartConnt{
+		background-color: rgb(0, 113, 51);
+		color: rgb(255, 255, 255);
+		width: 1.3rem;
+		height: 1.3rem;
+		padding:10px;
+		border-radius: 50%;
+		font-size: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		/* set position */
+		position: absolute;
+		top:0;
+		right: 0;
+		/* transform: translate(50%, -30%); */
+
+	}
+	header .btnArea .cartBtn:hover svg {
+		/* background-color: white; */
 		color: rgb(0, 200, 0);
 		fill: rgb(0, 200, 0);
+		animation: shakeCart 0.5s ease;
+		/* filter: brightness(0) saturate(100%) invert(36%) sepia(84%) saturate(508%) hue-rotate(74deg) brightness(97%) contrast(90%); */
 	}
-	header .btnArea .cartBtn .cartIcon:hover{
-		 animation: shakeCart 0.5s ease;
-    /* filter: brightness(0) saturate(100%) invert(36%) sepia(84%) saturate(508%) hue-rotate(74deg) brightness(97%) contrast(90%); */
-	}
+
 	/* 
 	header .btnArea .cartBtn .cartIcon{
 			width: 2rem;

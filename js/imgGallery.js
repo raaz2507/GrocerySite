@@ -1,5 +1,5 @@
 //console.log(window.getComputedStyle(ProductDisImg).display);
-class ProductImgGallery{
+export class ProductImgGallery{
 	#elemts;
 	constructor(prodData){
 		this.#elemts = this.#getElements();

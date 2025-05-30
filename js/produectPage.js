@@ -1,5 +1,8 @@
-// import {addBtn} from './addBtn.js';
- class productPageDeshbord{
+import {ProductImgGallery} from './imgGallery.js';
+import {add2CartBtnManager} from './addBtn.js';
+
+
+export  class productPageDeshbord{
 	#elemts;
 	constructor(prodData){
 		new ProductImgGallery(prodData);
@@ -22,7 +25,7 @@
 		const finalPriceValue = prodDetails.getElementsByClassName("finalPriceValue")[0];
 		const discount = prodDetails.getElementsByClassName("discount")[0];
 		
-		const cartBtn  = document.querySelector(".CartBtn");
+		const add2CartBtnContainer  = document.querySelector(".add2CartBtnContainer");
 
 		const prodDesc =  document.getElementsByClassName("prodDesc")[0];
 		
@@ -31,7 +34,7 @@
 		
 		const userReviewComments = document.getElementById("userReviewComments");
 		const relatedItems =document.getElementById("relatedItems");
-		return {prodDetails, prodName, brandName, quantityValue, units, mrpValue, finalPriceValue, discount, prodDesc, ratingValue, reviewCount , userReviewComments, relatedItems, cartBtn};
+		return {prodDetails, prodName, brandName, quantityValue, units, mrpValue, finalPriceValue, discount, prodDesc, ratingValue, reviewCount , userReviewComments, relatedItems, add2CartBtnContainer};
 	}
 	#genrateBreadCrumb(proData){
 		const breadCrumb = document.getElementById("breadCrumb");
@@ -65,11 +68,12 @@
     }
 
 	}
+
 	#setEventListener(proData){
-		const {cartBtn} = this.#elemts;
-		const {limits} = proData;
+		const {add2CartBtnContainer} = this.#elemts;
+		const {ProductId ,limits} = proData;
 		
-		const addBtnObj = new addBtn(); 
-		cartBtn.addEventListener('click', (event) => addBtnObj.addBtenEvent(event, limits));
+		const addBtnObj = new  add2CartBtnManager(ProductId, limits);
+		addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
 	}
 }

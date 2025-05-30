@@ -1,5 +1,5 @@
 
-class DashbordForBanner{
+export class DashbordForBanner{
 	constructor(){
 		this.startBanner();
 		

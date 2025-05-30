@@ -1,3 +1,4 @@
+import {add2CartBtnManager} from './addBtn.js';
 
 async function getDataFromSql(tableName= "products") {
 	try {
@@ -14,7 +15,7 @@ async function getDataFromSql(tableName= "products") {
 async function getSqlData(tableName){
 	const res = await fetch(`/api/${tableName}`);
 }
-class DashbordForRowNav {
+export class DashbordForRowNav {
 	
 	constructor(data){
 		const {productDataList, oneProduct, categoryData} = data;
@@ -64,7 +65,6 @@ class DashbordForRowNav {
 		// अब fragments को उनके related div में append करो
 		for (const catId in fragments) {
 			//const categoryDiv = document.getElementById(categoryId);
-			console.log(catId);
 			if (catagoryDiv[catId]) {
 				catagoryDiv[catId].appendChild(fragments[catId]);
 			}
@@ -77,58 +77,15 @@ class DashbordForRowNav {
 			NewCategoryDiv.className = "category";
 			NewCategoryDiv.style.backgroundColor = data.categoryColor;
 
-			NewCategoryDiv.innerHTML = `
-				<div class="categoryTitleDiv">
-					<p class="categoryTitle">${data.category}</p>
-				</div>
-			`;
+			NewCategoryDiv.innerHTML = `<div class="categoryTitleDiv">
+																		<p class="categoryTitle">${data.category}</p>
+																	</div>`;
+				
 			ItemCategory.appendChild(NewCategoryDiv);
 			return NewCategoryDiv;
 		}
 	}
 
-	// async createRow(productTestDataList) {
-	// 	const productData = await getDataFromSql("products") || productTestDataList;
-	
-	// 	// Object to hold fragments per category
-	// 	const fragments = {};
-		
-	// 	const ItemCategory = document.getElementById("ItemCategory");
-	// 	productData.forEach((data) => {
-	// 		const categoryId = data.category;//.replace(/\s+/g, '-'); // For ID-friendly name
-			
-	// 		// Check if fragment exists, else create
-	// 		if (!fragments[categoryId]) {
-	// 			fragments[categoryId] = document.createDocumentFragment();
-	// 		}
-	// 		console.log(data.category);
-	// 		let card = this.createProductCard(data);
-	// 		fragments[categoryId].appendChild(card);
-			
-	// 		// Check if div exists, else create and style it
-	// 		let categoryDiv = document.getElementById(categoryId);
-	// 		if (!categoryDiv) {
-	// 			createCatagoryRow(data);
-	// 		}
-	// 	});
-		
-
-	// 	// Finally, append all fragments to their respective divs
-	// 	for (let catId in fragments) {
-	// 		let targetDiv = document.getElementById(catId);
-	// 		targetDiv.appendChild(fragments[catId]);
-	// 	}
-	// 	function createCatagoryRow(data){
-			
-	// 		const categoryDiv = document.createElement("div");
-	// 		categoryDiv.id = data.category;
-	// 		categoryDiv.className = "category";
-	// 		categoryDiv.style.backgroundColor = data.categoryColor;
-	// 		categoryDiv.innerHTML = `<div class="categoryTitleDiv"><p class="categoryTitle">${data.category}</p></div>`;
-	// 		ItemCategory.appendChild(categoryDiv); // Append to body or specific container
-	// 	}
-	// }
-	
 	createProductCard(ProdeuctData) {
 		const elementMap = getElementsMap();
 			Object.freeze(elementMap);
@@ -138,7 +95,7 @@ class DashbordForRowNav {
 			Object.freeze(element);
 			Object.freeze(element.container);
 
-		createStrucher(element, ProdeuctData);
+		createProductCardStrucher(element, ProdeuctData);
 		
 		return element.container;
 
@@ -170,7 +127,7 @@ class DashbordForRowNav {
 				finalPrice: {Elm_type: "span", Elm_class: ["finalPriceValue"]},
 				
 				rating: { Elm_type: "p", Elm_class: ["rating"] },
-				CartBtn: { Elm_type: "div", Elm_class: ["CartBtn"] },
+				add2CartBtnContainer: { Elm_type: "div", Elm_class: ["add2CartBtnContainer"] },
 				//: {Elm_type:, Elm_class: []},
 			};
 			
@@ -193,7 +150,7 @@ class DashbordForRowNav {
 			return element;
 		}
 		
-		function createStrucher(element, ProdeuctData){
+		function createProductCardStrucher(element, ProdeuctData){
 			const {ProductId, brand_name , product_name, mrp, final_price, Qty, unit, limits} = ProdeuctData;
 			const {ThumImage, mainImage, OthImage, altText}=ProdeuctData;
 			
@@ -203,7 +160,7 @@ class DashbordForRowNav {
 			const {quantityDiv, qtyValue, unitValue}=element;
 			const {MRP_Div, MRP_Value,finalPrice}=element;
 
-			const { CartBtn } = element;
+			const { add2CartBtnContainer } = element;
 			container.id = ProductId;
 
 			// ==== imgFrame ====
@@ -266,22 +223,13 @@ class DashbordForRowNav {
 													<span class="reviewCount">(1000)</span>`;
 			proDetails.appendChild(rating);
 
-						
-			CartBtn.innerHTML = `	<!--  <div class="CartBtn "> -->
-															<button class="addBtn ">ADD</button>
-															<div class="counter hide">
-																<button class="decrease">—</button><p class="countDis">1</p><button class="increase">+</button>
-															</div>
-														</div>
-														<!-- </div> --> `;
+			const addBtnObj = new add2CartBtnManager(ProductId, limits);
 			
-			
-			const addBtnObj = new addBtn();
-			CartBtn.addEventListener("click", (event)=> addBtnObj.addBtenEvent(event, limits));
-			
+			addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
+
 			container.appendChild(imgFrame);
 			container.appendChild(proDetails);
-			container.appendChild(CartBtn);
+			container.appendChild(add2CartBtnContainer);
 		}
 	}
 
@@ -290,11 +238,11 @@ class DashbordForRowNav {
 		const container= event.target.closest(".productContaner");
 		const productId = container?.id;
 		
-		const cartBtn = event.target.closest(".CartBtn");
+		const add2CartBtnContainer = event.target.closest(".add2CartBtnContainer");
 		if (event.target.closest(".wishList")){
 			//console.log("wish");
 			wishList(productId, event);
-		}else if(cartBtn){
+		}else if(add2CartBtnContainer){
 			// console.log("add btn");
 		}else if(event.target.closest(".productContaner")){
 			//console.log("cartBox");

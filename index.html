@@ -6,68 +6,7 @@
 	
 	<link rel="icon" type="image/svg+xml" href="./img/site/leaf.svg">
 	<title>Grosery Site</title>
-
-	<link rel="stylesheet" type="text/css" href="./css/genralStyle.css">
-	<link rel="stylesheet" href="./css/headerStyle.css">
-	<link rel="stylesheet" href="./css/banner.css">
-	<link rel="stylesheet" href="./css/navBarStyle.css">
-	<link rel="stylesheet" href="./css/mainStyle.css">
-	<link rel="stylesheet" href="./css/ProductCategoryRows.css">
-	<link rel="stylesheet" href="./css/footerStyle.css">
-
-	<!-- add on css  start-->
-	 <link rel="stylesheet" href="css/addBtn.css">
-	<link rel="stylesheet" href="./css/loginForm.css">
-	<link rel="stylesheet" href="./css/singupForm.css">
-	<!-- add on css end -->
-
-	<style>
-		body{
-			background: rgb(255, 255, 255) url('./img/groseryBackgrond.png') repeat;
-			background-size: 20%;
-		}
-		#container{
-			background-color: rgba(192, 125, 255, 0.4);
-			width:98%;
-			margin: 5px auto;
-		}
-		
-		/* main area start*/ 
-	   .test{
-			width:100%;
-			
-		}
-		#usrReview{
-			background-color: gold;
-		}
-		#itemCategory{
-			background-color: silver;
-		}
-		#mostSelling{
-			background-color: blanchedalmond;
-		}
-		#mostBuy{
-			background-color: blueviolet;
-		}
-		#recentBuy{
-			background-color: beige;
-		}  
-		/* main area end */
-		@media only screen and (max-width:1000px){
-			body{
-				background-size: 50%;
-			}
-		}
-		/* === add button css start=== */
-		.CartBtn{
-			width:60%;
-			margin: 12px auto;
-		}
-		.CartBtn .addBtn{
-			padding: 6px 0;
-		}
-		/* === add button css end=== */
-	</style>
+	<link rel="stylesheet" href="./css/mainIndex.css">
 </head>
 
 <body>
@@ -134,17 +73,18 @@
 								<span class="reviewCount">(1000)</span>
 							</p>
 						</div>
-						
-						<div class="CartBtn">
-							<button class="addBtn ">ADD</button>
-							<div class="counter hide">
-								<button class="decrease">—</button><p class="countDis">1</p><button class="increase">+</button>
+						<div class="add2CartBtnContainer"> 
+							<div class="add2CartBtn">
+								<button class="addBtn ">ADD</button>
+								<div class="counter hide">
+									<button class="decrease">—</button><p class="countDis">1</p><button class="increase">+</button>
+								</div>
 							</div>
 						</div>
 						
 					</div>
 				</div> -->
-
+				
 				<div id="mostSelling" class="test">Most selling</div>
 				<!-- sepecify for User -->
 				<div id="mostBuy" class="test"> must Buy</div>
@@ -154,42 +94,10 @@
 
 		<footer></footer>
 	</div>
-	<div id="loginNsingup_container" class="hide">
-		<!-- this area wiss contain login and  singup forms -->
-	</div>
-	<script src="js/headerNfooter.js"></script>
-	<script src="./js/banner.js"></script>
-	<script src="./js/addBtn.js"></script>
-	<script src="./js/productCard.js"></script>
-	<script src="./js/Login_N_Singup.js"></script>
-	<script src="./js/staticProductData.js"></script>
-	<script>
-		/*
-		//for load header, and footer
-		async function loadPart(file, selector){
-			const response = await fetch(file);
-			const html = await response.text();
-			const elmt =document.querySelector(selector);
-			elmt.innerHTML = html;
-		}
+	<!-- <div id="loginNsingup_container" class="hide">this area wiss contain login and  singup forms </div> -->
+	 <!-- <div id="mainCartContaner"></div> -->
 
-		//loadPart("header.html", "header");
-		//loadPart("footer.html", "footer");
-		*/
-			new  headerNfooter();
-		document.addEventListener("DOMContentLoaded", ()=>{
-			const data = staticData;
-			//for header and footer
-		
-			//for banner 
-			const DashbordForBanner_Obj = new DashbordForBanner();
-			//for ProductCard
-			const DashbordForRowNav_Obj = new DashbordForRowNav(data);
-			//for Login_N_Singup
-			const longinNsingupDeshbord_Obj = new longinNsingupDeshbord();
-		});
-		console.log(window.location.pathname); //this will return whole path with file name
-	</script>
+	<script type="module" src="./js/mainIndex.js"></script>
 </body>
 </html>
 <!-- home page

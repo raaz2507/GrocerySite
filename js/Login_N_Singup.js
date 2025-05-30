@@ -1,15 +1,24 @@
-class longinNsingupDeshbord{
+export class longinNsingupDeshbord{
 	constructor(){
 		this.getElements();
-		this.setEventLisner();
+		this.setEventLisnerOnContainer();
 	}
 
 	getElements(){
 		this.loginBtn = document.getElementById("loginBtn");
-		this.loginNsingup_container =document.getElementById("loginNsingup_container");
+		// this.loginNsingup_container =document.getElementById("loginNsingup_container");
+		this.loginNsingup_container = createLS_Container();
+
+		function createLS_Container(){
+			const elmt = document.createElement("div");
+			elmt.id= "loginNsingup_container";
+			elmt.className= "hide";
+			document.body.append(elmt);
+			return elmt;
+		}
 	}
 
-	getFormElements(){
+	getLoginFormElements(){
 		this.loginForm = document.forms["loginForm"];
 
 		this.phoneInput = loginForm["phoneNum"];
@@ -21,15 +30,15 @@ class longinNsingupDeshbord{
 		this.singupBtn = document.getElementById("singupBtn");
 	}
 
-	setEventLisner(){
+	setEventLisnerOnContainer(){
 		
 		const {loginBtn, loginNsingup_container}=this;
 		
 		loginBtn.addEventListener("click", ()=>{
 			if (loginNsingup_container.classList.contains("hide")){
 				loginNsingup_container.innerHTML = this.#addloginForm();
-				this.getFormElements();
-				this.setFormEventLisners();
+				this.getLoginFormElements();
+				this.setLoginFormEventLisners();
 				loginNsingup_container.classList.remove("hide");
 			}
 		});
@@ -44,11 +53,9 @@ class longinNsingupDeshbord{
 				}
 			}
 		});
-
-		
-	
 	}
-	setFormEventLisners(){
+
+	setLoginFormEventLisners(){
 		const { loginForm, phoneInput, pwdInput, singupBtn}=this;
 			/* ==== Form Related start ==== */
 			document.getElementsByClassName("pwdViewIcon")[0].addEventListener("click", function(event){

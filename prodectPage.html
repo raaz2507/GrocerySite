@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="css/addBtn.css">
 	<style>
 		/* === add button css start=== */
-		.CartBtn{
+		.add2CartBtnContainer{
 			width:12rem;
 			margin: 12px 0;
 		}
@@ -100,12 +100,13 @@
 								<span class="discount">50%</span>
 						</p>
 					<!-- CartBtn -->
-					<div class="CartBtn">
+					 <div class="add2CartBtnContainer"></div>
+					<!-- <div class="CartBtn">
 						<button class="addBtn ">ADD</button>
 						<div class="counter hide">
 							<button class="decrease">—</button><p class="countDis">1</p><button class="increase">+</button>
 						</div>
-					</div>
+					</div> -->
 					
 				</div>
 			
@@ -157,29 +158,11 @@
 		<div id="relatedItems" style="background-color: pink;"> releted items row</div>
 	</div>
 	<footer></footer>
-<script src="js/headerNfooter.js"></script>
-<script src="js/imgGallery.js"></script>
-<script src="js/addBtn.js"></script>
-<script src="js/staticProductData.js"></script>
-<script src="js/produectPage.js"></script>
+
+	<script type="module" src="./js/mainProductPageScript.js"></script>
 
 <script>
-	document.addEventListener("DOMContentLoaded", (e)=>{
-		new headerNfooter();
-		//set page acoding product
-		const params = new URLSearchParams(window.location.search);
-		const productId = params.get("id");
-		//console.log(productId);
-		
-		const data = fatchData(productId);
-		//console.log(data);
-		function fatchData(product_Id){
-			const allDataList =staticData.productDataList; //ye fake data js/staticProductData.js se aa raha hai.
-			return allDataList.find(obj=> obj.ProductId === product_Id) || null;
-		}
-		
-		new productPageDeshbord(data);
-	});
+
 
 
 	

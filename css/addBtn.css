@@ -1,12 +1,12 @@
 /* .addBtn  .counter .hide .decrease .countDis .increase */
-.CartBtn *{
+.add2CartBtn *{
 			/* border: 1px solid red; */
 			font-size: 1rem;
 			padding: 6px 6px;
 			color: white;
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		}
-		.CartBtn{
+		.add2CartBtn{
 			border: 1px solid white;
 			width:100%;
 			
@@ -15,34 +15,34 @@
 			background-color: rgba(1, 198, 1, 0.9);
 			overflow: hide;
 		}
-		.CartBtn .addBtn{
+		.add2CartBtn .addBtn{
 			padding: 12.5px 0;
 			width: 100%;
 		}
-		.CartBtn .addBtn ,.CartBtn .decrease,.CartBtn .increase{
+		.add2CartBtn .addBtn , .add2CartBtn .decrease, .add2CartBtn .increase{
 			background-color: transparent;
 			border:none;
 		}
-		.CartBtn .counter{
+		.add2CartBtn .counter{
 			margin : 0 8px;
 		}
-		.CartBtn .counter .increase:disabled{
+		.add2CartBtn .counter .increase:disabled{
 			opacity: 0.6;
 			cursor: not-allowed;
 		}
-		.CartBtn .counter .countDis{
+		.add2CartBtn .counter .countDis{
 			user-select: none;
 		}
 		.hide{
 			display:none !important;
 		}
 		/* === flex setting start === */
-		.CartBtn .counter{
+		.add2CartBtn .counter{
 			display: flex;
 			align-items: stretch;
 			padding:0;
 		}
-		.CartBtn .counter .countDis{
+		.add2CartBtn .counter .countDis{
 			flex:1;
 			text-align: center;
 		}
