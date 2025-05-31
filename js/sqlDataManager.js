@@ -13,18 +13,18 @@ export class SQLData{
 		}
 	}
 	static async getAllProductData(){
-		return await this.#requestT2Server("/products");// || staticData.productDataList;
+		return await this.#requestT2Server("/products") || staticData.productDataList;
 	}
 	static async getCatagoryData(){
-		return await this.#requestT2Server("/catagory");// || staticData.categoryData;
+		return await this.#requestT2Server("/catagory") || staticData.categoryData;
 	}
 	static async getSelectdProductData(product_id){
 		const data = await this.#requestT2Server(`/products/${product_id}`);
-		return data?.[0];// || fetchData(product_id);
+		return data?.[0] || fetchData(product_id);
 	}
 	static async getSortProductData(product_id){
 		const data = await this.#requestT2Server(`/products/sort/${product_id}`);
-		return data?.[0];// || fetchData(product_id);
+		return data?.[0] || fetchData(product_id);
 	}
 
 	static async #requestT2Server(routerName){
