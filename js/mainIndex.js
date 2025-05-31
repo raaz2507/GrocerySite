@@ -1,24 +1,18 @@
 import {headerNfooter} from './headerNfooter.js';
 import {DashbordForBanner} from './banner.js';
 import {DashbordForRowNav} from './productCard.js';
-import {staticData} from './staticProductData.js';
 import {cartDeshBord} from './cartManager.js';
 
-new  headerNfooter();
+new  headerNfooter(); //for header and footer
 
 document.addEventListener("DOMContentLoaded", ()=>{
-	const data = staticData;
-		//for header and footer
-	
-		//for banner 
-		new DashbordForBanner();
-		//for ProductCard
-		new DashbordForRowNav(data);
-		//for Login_N_Singup
-		// const longinNsingupDeshbord_Obj = new longinNsingupDeshbord();
+		new DashbordForBanner(); //for banner 
 		
-		//cartSiderBar and Floting Btn
-		new cartDeshBord();
+		new DashbordForRowNav(); //for ProductCard
+		
+		// const longinNsingupDeshbord_Obj = new longinNsingupDeshbord(); //for Login_N_Singup
+		
+		new cartDeshBord(); //cartSiderBar and Floting Btn
 });
 
 /*

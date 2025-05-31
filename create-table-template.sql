@@ -64,6 +64,7 @@ INSERT INTO ProductImages (ProductId, ThumImage, mainImage, OthImage) VALUES
 ('prod_5', 'orange.jpg', 'orange.jpg', 'orange.jpg, orange.jpg'),
 ('prod_6', 'banana.jpg', 'banana.jpg', 'banana.jpg, banana.jpg'),
 ('prod_7', "amulButtor.jpg", "amulButtor.jpg", "amulButtor.jpg, amulButtorBack.jpg");
+
 CREATE VIEW ProductWithImages AS
 SELECT 
   p.ProductId,
@@ -84,6 +85,23 @@ FROM Products p
 INNER JOIN ProductImages pi ON p.ProductId = pi.ProductId
 INNER JOIN category c ON p.category = c.categoryName;
 
+CREATE VIEW ShortProductInfo AS
+SELECT
+  p.`ProductId`,
+  p.product_name,
+  p.brand_name,
+  p.mrp,
+  p.final_price,
+  p.Qty,
+  p.unit,
+  p.limits,
+  c.color AS categoryColor,
+  pi.ThumImage
+  FROM Products p 
+  INNER JOIN ProductImages pi ON p.ProductId = pi.ProductId
+  INNER JOIN category c ON p.category = c.categoryName;
+
+-- SELECT * FROM ShortProductInfo WHERE ProductId = 'prod_1';
 
 CREATE TABLE Units (
     id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

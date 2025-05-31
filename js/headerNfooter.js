@@ -36,7 +36,7 @@ export class headerNfooter{
 					<br>My cart
 					<div class="cartConnt">0</div>
 				</button>
-
+				
 			</div>
 		`;
 	}

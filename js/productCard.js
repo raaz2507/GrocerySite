@@ -1,29 +1,15 @@
 import {add2CartBtnManager} from './addBtn.js';
+import {SQLData} from './sqlDataManager.js';
 
-async function getDataFromSql(tableName= "products") {
-	try {
-		const res = await fetch(`/${tableName}`);
-		const data = await res.json();
-		
-		console.table(data);
-		return data;
-	} catch (err) {
-		console.error("Fetch Error", err);
-		// alert("Error fetching products");
-	}
-}
-async function getSqlData(tableName){
-	const res = await fetch(`/api/${tableName}`);
-}
+
 export class DashbordForRowNav {
 	
-	constructor(data){
-		const {productDataList, oneProduct, categoryData} = data;
-		this.createCatagoryRowNavbar(categoryData);
-		this.createRow(productDataList);
+	constructor(){
+		this.createCatagoryRowNavbar();
+		this.createRow();
 		this.setEventsOnElemets();
-		
 	}
+
 	setEventsOnElemets(){
 		
 		document.getElementById("ItemCategory").addEventListener("click", (event)=>{
@@ -31,8 +17,9 @@ export class DashbordForRowNav {
 		});
 
 	}
-	async createRow(productTestDataList) {
-		const productData = await getDataFromSql("products") || productTestDataList;
+
+	async createRow() {
+		const productData = await SQLData.getAllProductData();
 
 		const fragments = {};
 		const ItemCategory = document.getElementById("ItemCategory");
@@ -274,9 +261,9 @@ export class DashbordForRowNav {
 		}
 	}
 
-	async createCatagoryRowNavbar(catagoryTestData){
+	async createCatagoryRowNavbar(){
 		const catagoryNavbar = document.getElementById("catagoryNavbar");
-		const catagoryData= await getDataFromSql("catagory") || catagoryTestData;
+		const catagoryData= await SQLData.getCatagoryData();
 
 		const fragment =document.createDocumentFragment();
 		catagoryData.forEach(data=>{

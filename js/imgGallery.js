@@ -26,6 +26,7 @@ export class ProductImgGallery{
 	}
 	#genrateThumImgBox(prodData){
 		const {thumRow} = this.#elemts;
+	
 		const {ProductId, mainImage, OthImage} = prodData;
 		
 		const imgData=[mainImage, ...OthImage.split(',')];

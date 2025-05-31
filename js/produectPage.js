@@ -1,10 +1,16 @@
 import {ProductImgGallery} from './imgGallery.js';
 import {add2CartBtnManager} from './addBtn.js';
 
+import {SQLData} from './sqlDataManager.js';
 
 export  class productPageDeshbord{
 	#elemts;
-	constructor(prodData){
+	constructor(prodID){
+		this.#init(prodID);
+	}
+	async #init(prod_Id){
+		const prodData = await SQLData.getSelectdProductData(prod_Id);
+		
 		new ProductImgGallery(prodData);
 
 		this.#elemts= this.#getElements();
@@ -12,6 +18,7 @@ export  class productPageDeshbord{
 		this.#setProductDetails(prodData);
 		this.#setEventListener(prodData);
 	}
+
 	#getElements(){
 		const prodDetails = document.getElementById("prodDetails");
 		const prodName = prodDetails.getElementsByClassName("prodName")[0];
