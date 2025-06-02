@@ -1,4 +1,5 @@
-import {add2CartBtnManager} from './addBtn.js';
+// import {add2CartBtnManager} from './addBtn.js';
+import {getAdd2CartBtnStrucher} from './addBtn.js';
 import {SQLData} from './sqlDataManager.js';
 
 
@@ -210,9 +211,9 @@ export class DashbordForRowNav {
 													<span class="reviewCount">(1000)</span>`;
 			proDetails.appendChild(rating);
 
-			const addBtnObj = new add2CartBtnManager(ProductId, limits);
-			
-			addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
+			//const addBtnObj = new add2CartBtnManager(ProductId, limits);
+			//addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
+			add2CartBtnContainer.append(getAdd2CartBtnStrucher( ProductId, limits));
 
 			container.appendChild(imgFrame);
 			container.appendChild(proDetails);

@@ -1,6 +1,8 @@
-import {staticData} from './staticProductData.js'
+import {staticData} from './staticProductData.js';
+// import {cartDeshBord} from './cartManager.js';
 
 export class SQLData{
+	
 	static async getDataFromSql(rauterName) {
 		if (rauterName ==="products"){
 			

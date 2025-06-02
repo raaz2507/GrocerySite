@@ -1,17 +1,17 @@
 import {cartDataManager} from './cartDataManager.js';
 import {SQLData} from './sqlDataManager.js';
-import {add2CartBtnManager} from './addBtn.js';
+import {getAdd2CartBtnStrucher} from './addBtn.js';
 
 export class cartDeshBord{
 	#elemts;
 	constructor(){
 		this.#elemts= this.#getElements();
 		this.#setEvents();
-		
+		this.updateCartList();
 	}
-	updateCartList(){
+	async updateCartList(msg="defult"){
+		console.log(msg);
 		const fragment= document.createDocumentFragment();
-
 		//step 1 get all procut id's list
 		// get data about produt 
 		// get data about proct add count
@@ -19,21 +19,36 @@ export class cartDeshBord{
 		const itemListData = cartDataManager.getAllCartItemsList();
 		//console.log(itemListData);
 		const ListItems={};
-		itemListData.forEach((data)=>{
+		let priceData={TotalMrp:0, finalprice:0, totalQty:0};
+		//console.log(ListItems);
+		for (const data of itemListData){
+			
 			const {prod_id, qty} = data;
-			// console.log(`${prod_id } ${qty}`);
-			if (qty<= 0 && ListItems?.prod_id ){
-				delete ListItems.prod_id;
+			//console.log(`${prod_id } ${qty} ${" "}`);
+			//console.log([prod_id] in ListItems);
+			if (qty<= 0 && ([prod_id] in ListItems) ){
+				delete ListItems[prod_id];
+			} 
+			if(qty>0 ){
+				if (!(prod_id in ListItems)){
+					const prodData = await SQLData.getSortProductData(prod_id);
+					const {mrp, final_price}=prodData;
+					priceData.TotalMrp += Number(mrp) * Number(qty);
+					priceData.finalprice += Number(final_price) * Number(qty);
+					priceData.totalQty += qty;
+					ListItems[prod_id] = this.#createCartItem(prodData);
+				}
 			}
-			if(qty>0 && (ListItems?.prod_id !== undefined)){
-				ListItems[prod_id] =this.#createCartItem(prod_id);
-			}
-		});
-		for (const [items] of Object.keys(ListItems)){
-			fragment.appendChild(items);
 		}
-		
+		console.log(ListItems)
+		console.log(priceData);
+		Object.keys(ListItems).forEach((key)=>{
+			fragment.appendChild(ListItems[key]);
+		});
+
+		this.#elemts.cartList.innerHTML="";
 		this.#elemts.cartList.append( fragment );
+		//this.#elemts.mainCartContaner.innerHTML = this.#cartBtnStrucher(priceData) + this.#cartSideBarStrucher(priceData);
 	}
 
 	#getElements(){
@@ -41,10 +56,11 @@ export class cartDeshBord{
 		mainCartContaner.id = "mainCartContaner";
 		// const mainCartContaner = document.getElementById("mainCartContaner");
 
-		mainCartContaner.innerHTML = this.#cartBtnStrucher() + this.#cartSideBarStrucher();
+		let priceData={TotalMrp:0, finalprice:0, totalQty:0};
+		mainCartContaner.innerHTML = this.#cartBtnStrucher(priceData) + this.#cartSideBarStrucher(priceData);
 		//mainCartContaner.append(this.#cartBtnStrucher());
 
-		mainCartContaner.append(this.#cartSideBarStrucher());
+		//mainCartContaner.append(this.#cartSideBarStrucher());
 		
 		document.body.append(mainCartContaner);
 
@@ -56,8 +72,9 @@ export class cartDeshBord{
 		const cartList=document.getElementById("cartList"); 
 		// const =document.getElementById(""); 
 		//🗑️
-		return {cartBtnContainer, cartListContainer, expendBtn, collapseBtn, cartList};
+		return {mainCartContaner, cartBtnContainer, cartListContainer, expendBtn, collapseBtn, cartList};
 	}
+
 	#setEvents(){
 		const {cartBtnContainer, cartListContainer, expendBtn, collapseBtn}= this.#elemts;
 		expendBtn.addEventListener('click', switch2List);
@@ -96,10 +113,9 @@ export class cartDeshBord{
 				}
 			}
 		}
-
 	}
 
-	#createCartItem(prodId){
+	#createCartItem(prod_Data){
 			const elemtMap={
 				cartItems:{type: "div", classes:["cartItems"]},
 				close:{type: "button", classes:["close"]},
@@ -130,14 +146,12 @@ export class cartDeshBord{
 				elemts[name]= elm;
 			}
 		
-			createStrucher(elemts, prodId);
+			createStrucher(elemts, prod_Data);
 			
 			return elemts.cartItems;
 
-		async function createStrucher(elemts, productId){
+		function createStrucher(elemts, prodData){
 			const {cartItems, close, productImg, img, productDetails, productName, quantity, price, mrp_value, paybleAmount, addBtnContainer} = elemts; //, Add_Btn, decrease, increase, disQuantity
-			
-			const prodData = await SQLData.getSortProductData(productId);
 			
 			const {ProductId, product_name, brand_name,mrp, final_price, Qty, unit, limits, categoryColor, ThumImage}= prodData;
 
@@ -146,8 +160,8 @@ export class cartDeshBord{
 			close.innerText = 'X';
 			cartItems.append(close);
 			
-			img.src=`./img/ProductImages/${productId}/${ThumImage}`;
-			img.alt=`${productId} imgage`;
+			img.src=`./img/ProductImages/${ProductId}/${ThumImage}`;
+			img.alt=`${ProductId} imgage`;
 			productImg.append(img);
 			cartItems.append(productImg);
 			
@@ -177,8 +191,9 @@ export class cartDeshBord{
 			// Add_Btn.append(increase);
 			// cartItems.append(Add_Btn);
 			
-			const addBtnObj = new add2CartBtnManager(ProductId, limits);
-			addBtnObj.add2CartBtnStrucher(addBtnContainer);
+			//const addBtnObj = new add2CartBtnManager(ProductId, limits);
+			//addBtnObj.add2CartBtnStrucher(addBtnContainer);
+			addBtnContainer.append(getAdd2CartBtnStrucher(ProductId, limits));
 			cartItems.append(addBtnContainer);
 
 			cartItems.style.backgroundColor = categoryColor;
@@ -186,11 +201,12 @@ export class cartDeshBord{
 	}
 
 
-	#cartBtnStrucher(){
+	#cartBtnStrucher(priceData){
+		const {TotalMrp, finalprice, totalQty}= priceData;
 		return `<div id="cartBtnContainer" class="FadeVisual">
 			<div id="cardItemsCount">
-				<p>Items <span class="TotalItemValue">2</span></p>
-				<p>Amont ₹<span class=" TotalAumountValue">10</span></p>
+				<p>Items <span class="TotalItemValue">${totalQty}</span></p>
+				<p>Amont ₹<span class=" TotalAumountValue">${TotalMrp}</span></p>
 			</div>
 			<button class="BtnStyle" id="expendBtn">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -200,7 +216,8 @@ export class cartDeshBord{
 		</div>`;
 	}
 
-	#cartSideBarStrucher(){
+	#cartSideBarStrucher(priceData){
+		const {TotalMrp, finalprice, totalQty}= priceData;
 		return `<div id="cartListContainer" class="hide SlideVisual">
 			<div id="cartList"><!-- cart items start --></div>
 			<div id="cartFooter">
@@ -210,9 +227,9 @@ export class cartDeshBord{
 						</svg>
 					</button>
 					<div id="cartSummary">
-						<p id="totalAmount">Total Amount: ₹<span id="totalAmountValue">100</span></p>
-						<p id="paybleAmount">Palyble Amount: ₹<span id="paybleAmountValue">80 </span></p>
-						<p id="saveAmount">You saved: ₹<span id="savedAmountValue">20 </span><span id="savePercentage">20</span>% off</p>
+						<p id="totalAmount">Total Amount: ₹<span id="totalAmountValue">${TotalMrp}</span></p>
+						<p id="paybleAmount">Palyble Amount: ₹<span id="paybleAmountValue">${finalprice}</span></p>
+						<p id="saveAmount">You saved: ₹<span id="savedAmountValue">${Number(TotalMrp)-Number(finalprice)} </span><span id="savePercentage">${((Number(TotalMrp) - Number(finalprice)) / Number(TotalMrp)) * 100}</span>% oFF</p>
 						<button id="continueToPay">Continue</button>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 import {ProductImgGallery} from './imgGallery.js';
-import {add2CartBtnManager} from './addBtn.js';
+//import {add2CartBtnManager} from './addBtn.js';
+import {getAdd2CartBtnStrucher} from './addBtn.js';
 
 import {SQLData} from './sqlDataManager.js';
 
@@ -80,7 +81,8 @@ export  class productPageDeshbord{
 		const {add2CartBtnContainer} = this.#elemts;
 		const {ProductId ,limits} = proData;
 		
-		const addBtnObj = new  add2CartBtnManager(ProductId, limits);
-		addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
+		//const addBtnObj = new  add2CartBtnManager(ProductId, limits);
+		//addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
+		add2CartBtnContainer.append( getAdd2CartBtnStrucher(ProductId, limits));
 	}
 }
