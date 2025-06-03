@@ -3,97 +3,110 @@ import {SQLData} from './sqlDataManager.js';
 import {getAdd2CartBtnStrucher} from './addBtn.js';
 
 export class cartDeshBord{
-	#elemts;
+	#mainCartContainer;
+	#cartFlotingBtnElemts;
+	#cartSidebarElemts;
+	#priceData= {TotalMrp:0, finalprice:0, totalQty:0};
+	#ListItems={};
 	constructor(){
-		this.#elemts= this.#getElements();
+		this.#constructCartManager();
 		this.#setEvents();
 		this.updateCartList();
 	}
 	async updateCartList(msg="defult"){
 		console.log(msg);
 		const fragment= document.createDocumentFragment();
-		//step 1 get all procut id's list
-		// get data about produt 
-		// get data about proct add count
-		//update on every click
+		
 		const itemListData = cartDataManager.getAllCartItemsList();
 		//console.log(itemListData);
-		const ListItems={};
-		let priceData={TotalMrp:0, finalprice:0, totalQty:0};
-		//console.log(ListItems);
+		//const ListItems={};
+		this.#priceData={TotalMrp:0, finalprice:0, totalQty:0};
+		//console.log(this.#ListItems);
 		for (const data of itemListData){
 			
 			const {prod_id, qty} = data;
 			//console.log(`${prod_id } ${qty} ${" "}`);
-			//console.log([prod_id] in ListItems);
-			if (qty<= 0 && ([prod_id] in ListItems) ){
-				delete ListItems[prod_id];
+			//console.log([prod_id] in this.#ListItems);
+			if (qty<= 0 && ([prod_id] in this.#ListItems) ){
+				delete this.#ListItems[prod_id];
 			} 
 			if(qty>0 ){
-				if (!(prod_id in ListItems)){
+				if (!(prod_id in this.#ListItems)){
 					const prodData = await SQLData.getSortProductData(prod_id);
-					const {mrp, final_price}=prodData;
-					priceData.TotalMrp += Number(mrp) * Number(qty);
-					priceData.finalprice += Number(final_price) * Number(qty);
-					priceData.totalQty += qty;
-					ListItems[prod_id] = this.#createCartItem(prodData);
+					
+					// const {mrp, final_price}=prodData;
+					// this.#priceData.TotalMrp += Number(mrp) * Number(qty);
+					// this.#priceData.finalprice += Number(final_price) * Number(qty);
+					// this.#priceData.totalQty += qty;
+					
+					
+					this.#ListItems[prod_id]={
+						productData: prodData,
+						Elemt : this.#createCartItem(prodData),
+						QTY: qty
+					};
+				}else {
+					this.#ListItems[prod_id].QTY= qty;
 				}
+				this.#updatePriceData(prod_id);
 			}
 		}
-		console.log(ListItems)
-		console.log(priceData);
-		Object.keys(ListItems).forEach((key)=>{
-			fragment.appendChild(ListItems[key]);
+
+		Object.keys(this.#ListItems).forEach((key)=>{
+			fragment.appendChild(this.#ListItems[key].Elemt);
 		});
 
-		this.#elemts.cartList.innerHTML="";
-		this.#elemts.cartList.append( fragment );
-		//this.#elemts.mainCartContaner.innerHTML = this.#cartBtnStrucher(priceData) + this.#cartSideBarStrucher(priceData);
+		this.#cartSidebarElemts.cartList.innerHTML=""; // this reset list 
+		this.#cartSidebarElemts.cartList.append( fragment );
+		
+		this.#updateFlotingIconDetails();
+		this.#updateSidebarDetils();
 	}
 
-	#getElements(){
+	#updatePriceData(prodId){
+		const {mrp, final_price}=this.#ListItems[prodId].productData;
+		const qty=this.#ListItems[prodId].QTY;
+		this.#priceData.TotalMrp += Number(mrp) * Number(qty);
+		this.#priceData.finalprice += Number(final_price) * Number(qty);
+		this.#priceData.totalQty += qty;
+	}
+
+	#constructCartManager(){
 		const mainCartContaner =  document.createElement("div");
 		mainCartContaner.id = "mainCartContaner";
 		// const mainCartContaner = document.getElementById("mainCartContaner");
 
-		let priceData={TotalMrp:0, finalprice:0, totalQty:0};
-		mainCartContaner.innerHTML = this.#cartBtnStrucher(priceData) + this.#cartSideBarStrucher(priceData);
-		//mainCartContaner.append(this.#cartBtnStrucher());
-
-		//mainCartContaner.append(this.#cartSideBarStrucher());
-		
+		const cartFloatingBtnContainer= this.#cartFlotingBtnStrucher();
+		const cartSidebarContainer=this.#cartSideBarStrucher()
+		mainCartContaner.append(cartFloatingBtnContainer,cartSidebarContainer)
 		document.body.append(mainCartContaner);
-
-
-		const expendBtn= document.getElementById("expendBtn");
-		const collapseBtn= document.getElementById("collapseBtn");
-		const cartBtnContainer =document.getElementById("cartBtnContainer");
-		const cartListContainer=document.getElementById("cartListContainer");
-		const cartList=document.getElementById("cartList"); 
-		// const =document.getElementById(""); 
-		//🗑️
-		return {mainCartContaner, cartBtnContainer, cartListContainer, expendBtn, collapseBtn, cartList};
+		
+		this.#mainCartContainer = mainCartContaner;
 	}
 
 	#setEvents(){
-		const {cartBtnContainer, cartListContainer, expendBtn, collapseBtn}= this.#elemts;
+		const {cartFloatingBtnContainer,expendBtn} = this.#cartFlotingBtnElemts;
+		const {cartSidebarContainer, collapseBtn} = this.#cartSidebarElemts;
+	
+		
 		expendBtn.addEventListener('click', switch2List);
 		collapseBtn.addEventListener('click', switch2Btn);
 		
 		function switch2List(){
-			cartBtnContainer .classList.add("hide");
-			cartListContainer.classList.remove("hide");
+			cartFloatingBtnContainer .classList.add("hide");
+			cartSidebarContainer.classList.remove("hide");
 		}
 
 		function switch2Btn(){
-			cartBtnContainer.classList.remove("hide");
-			cartListContainer.classList.add("hide");
+			cartFloatingBtnContainer.classList.remove("hide");
+			cartSidebarContainer.classList.add("hide");
 			//togalClass();
 		}
 
 		
 		//====================
 		cartList.addEventListener('click', handleCartItemClick);
+		const self= this;
 		function handleCartItemClick(event) {
 			const clickedEl = event.target;
 			const cartItem = clickedEl.closest(".cartItems");
@@ -110,10 +123,13 @@ export class cartDeshBord{
 				if (clickedEl.classList.contains("close")) {
 					cartDataManager.SetValueInLocalStorage(prodId, 0);
 					cartItem.remove();
+					self.#updatePriceData(prodId);
 				}
 			}
 		}
 	}
+
+	
 
 	#createCartItem(prod_Data){
 			const elemtMap={
@@ -153,7 +169,7 @@ export class cartDeshBord{
 		function createStrucher(elemts, prodData){
 			const {cartItems, close, productImg, img, productDetails, productName, quantity, price, mrp_value, paybleAmount, addBtnContainer} = elemts; //, Add_Btn, decrease, increase, disQuantity
 			
-			const {ProductId, product_name, brand_name,mrp, final_price, Qty, unit, limits, categoryColor, ThumImage}= prodData;
+			const {ProductId, product_name, brand_name, mrp, final_price, Qty, unit, limits, categoryColor, ThumImage}= prodData;
 
 			cartItems.dataset.productID = ProductId; //its set dataset-productID="prod_1"
 
@@ -183,16 +199,6 @@ export class cartDeshBord{
 			productDetails.append(price);
 			cartItems.append(productDetails);
 		
-			// decrease.innerText = '-';
-			// Add_Btn.append(decrease);
-			
-			// Add_Btn.append(disQuantity);
-			// increase.innerHTML= '+';
-			// Add_Btn.append(increase);
-			// cartItems.append(Add_Btn);
-			
-			//const addBtnObj = new add2CartBtnManager(ProductId, limits);
-			//addBtnObj.add2CartBtnStrucher(addBtnContainer);
 			addBtnContainer.append(getAdd2CartBtnStrucher(ProductId, limits));
 			cartItems.append(addBtnContainer);
 
@@ -200,57 +206,67 @@ export class cartDeshBord{
 		}
 	}
 
-
-	#cartBtnStrucher(priceData){
-		const {TotalMrp, finalprice, totalQty}= priceData;
-		return `<div id="cartBtnContainer" class="FadeVisual">
-			<div id="cardItemsCount">
-				<p>Items <span class="TotalItemValue">${totalQty}</span></p>
-				<p>Amont ₹<span class=" TotalAumountValue">${TotalMrp}</span></p>
-			</div>
-			<button class="BtnStyle" id="expendBtn">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-					<path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
-				</svg>
-			</button>
-		</div>`;
-	}
-
-	#cartSideBarStrucher(priceData){
-		const {TotalMrp, finalprice, totalQty}= priceData;
-		return `<div id="cartListContainer" class="hide SlideVisual">
-			<div id="cartList"><!-- cart items start --></div>
-			<div id="cartFooter">
-					<button class="BtnStyle" id="collapseBtn">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-							<path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
-						</svg>
-					</button>
-					<div id="cartSummary">
-						<p id="totalAmount">Total Amount: ₹<span id="totalAmountValue">${TotalMrp}</span></p>
-						<p id="paybleAmount">Palyble Amount: ₹<span id="paybleAmountValue">${finalprice}</span></p>
-						<p id="saveAmount">You saved: ₹<span id="savedAmountValue">${Number(TotalMrp)-Number(finalprice)} </span><span id="savePercentage">${((Number(TotalMrp) - Number(finalprice)) / Number(TotalMrp)) * 100}</span>% oFF</p>
-						<button id="continueToPay">Continue</button>
-					</div>
-				</div>
-			</div>
-		</div>`;
-	}
-}
-/*
-#cartSideBarStrucher(){
-const elemtMap={
-			cartListContainer:{type: 'div', id:"cartListContainer", classList:["hide", "SlideVisual"]},
-			cartList :{type: 'div', id:'cartList', classList:[]},
-			cartFooter :{type: 'div', id:'cartFooter', classList:[]},
-			collapseBtn :{type: 'button', id:'collapseBtn', classList:['BtnStyle']},
-			cartSummary:{type: 'div', id:'cartSummary', classList:[]},
-			totalAmount:{type: 'p', id:'totalAmount', classList:[]},
-			paybleAmount:{type: 'p', id:'paybleAmount', classList:[]},
-			saveAmount:{type: 'p', id:'saveAmount', classList:[]},
-			savePercentage: {type:'span', id: 'savePercentage', classList:[]},
-			continueToPay: {type:'button', id: 'continueToPay', classList:[]}
+	#cartFlotingBtnStrucher(){
+		const elemtMap={
+			cartFloatingBtnContainer :{type: 'div', id:'cartFloatingBtnContainer', classList: ['FadeVisual']},
+			cardItemsSortDetails :{type: 'div', id: 'cardItemsSortDetails', classList: []},
+			TotalItemValue: {type: 'p', id:'' , classList:['TotalItemValue']},
+			TotalAumountValue: {type: 'p', id:'', classList:['TotalAumountValue']},
+			expendBtn : {type: 'button', id: 'expendBtn', classList:['BtnStyle']},
+		};
+		Object.freeze(elemtMap);
+		const elemts={};
+		for ( const [key, value] of Object.entries(elemtMap)){
+			const newElemt = document.createElement(value.type);
+			newElemt.id= value.id;
+			value.classList.forEach((cls)=>{
+				newElemt.classList.add(cls);
+			});
+			elemts[key]= newElemt;
 		}
+
+		this.#cartFlotingBtnElemts= elemts;
+		creteStrucher();
+		return elemts.cartFloatingBtnContainer;
+
+		function creteStrucher(){
+			const {cartFloatingBtnContainer, cardItemsSortDetails,TotalItemValue, TotalAumountValue, expendBtn}=elemts;
+			
+			TotalItemValue.innerText=`Items: ${0}`;
+			TotalAumountValue.innerText = `Amount ₹ ${0}`;
+			cardItemsSortDetails.append(TotalItemValue, TotalAumountValue);
+			
+			const svgImg={
+				viewBox: "0 0 320 512",
+				xmlns:"http://www.w3.org/2000/svg",
+				path: {type:"d", property:"M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"}
+			}
+			
+			expendBtn.appendChild(createSVG_Element(svgImg));
+
+			cartFloatingBtnContainer.append( cardItemsSortDetails, expendBtn);
+		}
+	}
+	#updateFlotingIconDetails(){
+		const {TotalItemValue, TotalAumountValue} =this.#cartFlotingBtnElemts
+		const {TotalMrp, finalprice, totalQty}= this.#priceData;
+		TotalItemValue.innerText=`Items: ${totalQty}`;
+		TotalAumountValue.innerText = `Amount ₹ ${TotalMrp}`;
+	}
+
+	#cartSideBarStrucher(){
+			const elemtMap={
+				cartSidebarContainer:{type: 'div', id:"cartSidebarContainer", classList:["hide", "SlideVisual"]},
+				cartList :{type: 'div', id:'cartList', classList:[]},
+				cartFooter :{type: 'div', id:'cartFooter', classList:[]},
+				collapseBtn :{type: 'button', id:'collapseBtn', classList:['BtnStyle']},
+				cartSummary:{type: 'div', id:'cartSummary', classList:[]},
+				totalAmount:{type: 'p', id:'totalAmount', classList:[]},
+				paybleAmount:{type: 'p', id:'paybleAmount', classList:[]},
+				saveAmount:{type: 'p', id:'saveAmount', classList:[]},
+				savePercentage: {type:'span', id: 'savePercentage', classList:[]},
+				continueToPay: {type:'button', id: 'continueToPay', classList:[]}
+			}
 		const elemts={}
 		for (const[name, value] of Object.entries(elemtMap)){
 			 const newElemt= document.createElement(value.type);
@@ -263,33 +279,108 @@ const elemtMap={
 		}
 		
 		setStrucher(elemts);
-		return elemts.cartListContainer;
+		this.#cartSidebarElemts = elemts;
+		return elemts.cartSidebarContainer;
 
 		function setStrucher(elemts){
-			const { cartListContainer, cartList, cartFooter, collapseBtn, cartSummary, totalAmount, paybleAmount, saveAmount, savePercentage, continueToPay }=elemts;
-			cartListContainer.append(cartList);
+			const { cartSidebarContainer, cartList, cartFooter, collapseBtn, cartSummary, totalAmount, paybleAmount, saveAmount, savePercentage, continueToPay }=elemts;
 			
-			
-			collapseBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-							<path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
-						</svg>`;
+			const svgImg={
+				viewBox: "0 0 320 512", 
+				xmlns: "http://www.w3.org/2000/svg",
+				path: {type:"d", property:"M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"}
+			}
+			collapseBtn.appendChild(createSVG_Element(svgImg));
 			cartFooter.append(collapseBtn);
 
-			totalAmount.innerHTML = `Total Amount: ₹ ${100}`;
-			cartSummary.append(totalAmount);
-
-			paybleAmount.innerHTML = `Palyble Amount: ₹ ${80}`;
-			cartSummary.append(paybleAmount);
+			totalAmount.innerHTML = `Total Amount: ₹ ${0}`;
+			paybleAmount.innerHTML = `Palyble Amount: ₹ ${0}`;
 			
-			saveAmount.innerHTML = `You saved: ₹ ${20} `;
-			savePercentage.innerHTML = `${20} % OFF`;
+			
+			saveAmount.innerHTML = `You saved: ₹ ${0} `;
+			savePercentage.innerHTML = `${0} % OFF`;
 			saveAmount.append(savePercentage);
-			cartSummary.append(saveAmount);
 
-			cartSummary.append(continueToPay);
+			continueToPay.innerText ="continue";
+
+			cartSummary.append(totalAmount, paybleAmount, saveAmount, continueToPay);
 			cartFooter.append(cartSummary);
-			cartListContainer.append(cartFooter);
-			
+			cartSidebarContainer.append(cartList, cartFooter);
 		}
+	}
+	#updateSidebarDetils(){
+		const {totalAmount, paybleAmount, saveAmount, savePercentage}=this.#cartSidebarElemts;
+		const {TotalMrp, finalprice, totalQty}= this.#priceData;
+		
+		const savedAmount = Number(TotalMrp)-Number(finalprice);
+		const discountPercent = TotalMrp > 0 ? Math.round((savedAmount/ Number(TotalMrp)) * 100) :0;
+		
+		
+		totalAmount.innerHTML = `Total Amount: ₹ ${TotalMrp.toFixed(2)}`;
+		paybleAmount.innerHTML = `Palyble Amount: ₹ ${finalprice.toFixed(2)}`;
+		
+		saveAmount.innerHTML = `You saved: ₹ ${savedAmount.toFixed(2)}`;
+		savePercentage.innerHTML = `  ${discountPercent}% OFF`;
+		saveAmount.append(savePercentage);
+	}
+	
+	
 }
+function createSVG_Element(svgObj){
+	const {viewBox, xmlns, path}= svgObj;
+	const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('viewBox', viewBox);
+	svg.setAttribute('xmlns', xmlns);
+	const pathElemt = document.createElementNS(xmlns, 'path');
+	pathElemt.setAttribute(path.type, path.property);
+
+	svg.appendChild(pathElemt);
+
+	return svg;
+	/*
+	const svgImg={
+				viewBox: "", 
+				xmlns: "",
+				path: {type:"d", property:""}
+			}
+	*/ 
+}
+
+/*
+
 */
+
+/*
+`<div id="cartFloatingBtnContainer" class="FadeVisual">
+	<div id="cardItemsSortDetails">
+		<p class="TotalItemValue">Items <span >${totalQty}</span></p>
+		<p class=" TotalAumountValue">Amont ₹<span >${TotalMrp}</span></p>
+	</div>
+	<button class="BtnStyle" id="expendBtn">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+			<path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+		</svg>
+	</button>
+</div>`
+*/
+
+/*
+`<div id="cartSidebarContainer" class="hide SlideVisual">
+	<div id="cartList"><!-- cart items start --></div>
+	<div id="cartFooter">
+			<button class="BtnStyle" id="collapseBtn">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+					<path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+				</svg>
+			</button>
+			<div id="cartSummary">
+				<p id="totalAmount">Total Amount: ₹<span id="totalAmountValue">${TotalMrp}</span></p>
+				<p id="paybleAmount">Palyble Amount: ₹<span id="paybleAmountValue">${finalprice}</span></p>
+				<p id="saveAmount">You saved: ₹<span id="savedAmountValue">${Number(TotalMrp)-Number(finalprice)} </span><span id="savePercentage">${((Number(TotalMrp) - Number(finalprice)) / Number(TotalMrp)) * 100}</span>% oFF</p>
+				<button id="continueToPay">Continue</button>
+			</div>
+		</div>
+	</div>
+</div>`
+
+*/ 
