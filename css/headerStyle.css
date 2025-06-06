@@ -77,7 +77,7 @@ header *{
 		fill: green;
 		position: relative;
 	}
-	header .btnArea .cartBtn .cartConnt{
+	header .btnArea .cartBtn .cartCount{
 		background-color: rgb(0, 113, 51);
 		color: rgb(255, 255, 255);
 		width: 1.3rem;

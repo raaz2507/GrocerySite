@@ -1,17 +1,15 @@
 import {longinNsingupDeshbord} from './Login_N_Singup.js';
-//import {qtyDetilsForHeaderCartIcon} from './cartManager.js';
-let cartBtnNcartCounter={};
+import {setCartObj} from './addBtn.js';
+import { cartDeshBord} from './cartManager.js';
 
-export function getHeaderCartBtnNcartCounter(){
-	console.log(cartBtnNcartCounter);
-	return cartBtnNcartCounter;
-}
+
 export class headerNfooter{
 	#elemts;
 	constructor(){
 		this.#elemts = this.#createHeader();
 		const {cartBtn, cartCount}= this.#elemts;
-		cartBtnNcartCounter = {cartBtn, cartCount};
+		const cartObj= new cartDeshBord({cartBtn, cartCount});
+		setCartObj(cartObj); // for cath addbtn changes
 		this.#setHeader();
 		this.#setEvents();
 		this.#footer();
@@ -74,7 +72,7 @@ export class headerNfooter{
 					</svg>
 					<br>My cart`;
 			cartCount.innerText = `0`;
-			cartBtn.appendChild(cartCount);
+			cartBtn.append(cartCount);
 
 			btnArea.append(loginBtn, cartBtn);
 
@@ -91,10 +89,10 @@ export class headerNfooter{
 			this.longinNsingupObj
 		});
 	}
-	updateCartCount(cartItemValue){
-		const {cartCount}=this.#elemts;
-		cartCount.innerText = "0";//qtyDetilsForHeaderCartIcon();
-	}
+	// updateCartCount(cartItemValue){
+	// 	const {cartCount}=this.#elemts;
+	// 	cartCount.innerText = "0";//qtyDetilsForHeaderCartIcon();
+	// }
 
 	#footer(){
 		const footer= document.getElementsByTagName("footer")[0];

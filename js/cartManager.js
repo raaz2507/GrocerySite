@@ -1,11 +1,8 @@
 import {cartDataManager} from './cartDataManager.js';
 import {SQLData} from './sqlDataManager.js';
 import {getAdd2CartBtnStrucher} from './addBtn.js';
-import {getHeaderCartBtnNcartCounter} from './headerNfooter.js'
 
-export function qtyDetilsForHeaderCartIcon(totalQty){
-	return totalQty;
-}
+
 export class cartDeshBord{
 	#mainCartContainer;
 	#cartFlotingBtnElemts;
@@ -13,13 +10,13 @@ export class cartDeshBord{
 	#priceData= {TotalMrp:0, finalprice:0, totalQty:0};
 	#ListItems={};
 	#headerElemts;
-	constructor(){
-		this.#headerElemts = getHeaderCartBtnNcartCounter();
-		console.log(this.#headerElemts);
+	constructor(HeaderCartBtnNcartCounter){
+		this.#headerElemts = HeaderCartBtnNcartCounter;
 		this.#constructCartManager();
 		this.#setEvents();
 		this.updateCartList();
 	}
+	
 	async updateCartList(msg="defult"){
 		console.log(msg);
 		const fragment= document.createDocumentFragment();
@@ -73,7 +70,7 @@ export class cartDeshBord{
 
 	#updateHeaderCartBtn(){
 		const {cartBtn, cartCount} = this.#headerElemts; 
-		//cartCount.innerText = this.#priceData.totalQty;
+		cartCount.innerText = this.#priceData.totalQty;
 	}
 	
 	#updatePriceData(prodId){
@@ -104,9 +101,7 @@ export class cartDeshBord{
 		
 		expendBtn.addEventListener('click', switch2List);
 		collapseBtn.addEventListener('click', switch2Btn);
-		if (cartBtn){
-			//cartBtn.addEventListener('click', switch2List);
-		}
+		cartBtn.addEventListener('click', switch2List);
 		
 
 
@@ -142,6 +137,7 @@ export class cartDeshBord{
 					cartDataManager.SetValueInLocalStorage(prodId, 0);
 					cartItem.remove();
 					self.#updatePriceData(prodId);
+					
 				}
 			}
 		}

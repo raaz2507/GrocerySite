@@ -1,11 +1,9 @@
 import {cartDataManager} from './cartDataManager.js';
-import { cartDeshBord} from './cartManager.js';
-const cartObj= new cartDeshBord();
-let pageObj;
 
 const addBtnList = {}
-export function getAdd2CartBtnStrucher(prodId, limits, caller){
 
+export function getAdd2CartBtnStrucher(prodId, limits, caller){
+/* this function create AddBtn obj and keep record of that and send it to them who called this*/ 
 		const newBtn = new add2CartBtnManager(prodId, limits);
 		
 		if (!addBtnList[prodId]){	addBtnList[prodId]={};}
@@ -14,6 +12,12 @@ export function getAdd2CartBtnStrucher(prodId, limits, caller){
 		
 		return newBtn.add2CartBtnStrucher();
 }
+
+let cartObj;
+export function setCartObj(cart_obj){
+	cartObj = cart_obj;
+}
+
 function updateAddBtn(prodId){
 	if(addBtnList[prodId] ){
 		if (addBtnList[prodId]["productCard"]){
@@ -157,9 +161,9 @@ class add2CartBtnManager{
 
 /*
  `<div class="add2CartBtn">
-							<button class="addBtn ">ADD</button>
-							<div class="counter hide">
-								<button class="decrease">—</button><p class="countDis">1</p><button class="increase">+</button>
-							</div>
-						</div>`
+		<button class="addBtn ">ADD</button>
+		<div class="counter hide">
+			<button class="decrease">—</button><p class="countDis">1</p><button class="increase">+</button>
+		</div>
+	</div>`
 */ 
