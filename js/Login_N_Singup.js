@@ -36,7 +36,7 @@ export class longinNsingupDeshbord{
 		
 		loginBtn.addEventListener("click", ()=>{
 			if (loginNsingup_container.classList.contains("hide")){
-				loginNsingup_container.innerHTML = this.#addloginForm();
+				loginNsingup_container.innerHTML = this.addloginForm();
 				this.getLoginFormElements();
 				this.setLoginFormEventLisners();
 				loginNsingup_container.classList.remove("hide");
@@ -107,7 +107,7 @@ export class longinNsingupDeshbord{
 			/* ==== form related End ====*/  
 	}
 	
-	#addloginForm(){
+	addloginForm(){
 		return `<div class="loginContainer">
 					
 					<img src="./img/site/siteTitle.svg" alt="site Title">

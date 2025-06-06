@@ -1,14 +1,21 @@
 import {cartDataManager} from './cartDataManager.js';
 import {SQLData} from './sqlDataManager.js';
 import {getAdd2CartBtnStrucher} from './addBtn.js';
+import {getHeaderCartBtnNcartCounter} from './headerNfooter.js'
 
+export function qtyDetilsForHeaderCartIcon(totalQty){
+	return totalQty;
+}
 export class cartDeshBord{
 	#mainCartContainer;
 	#cartFlotingBtnElemts;
 	#cartSidebarElemts;
 	#priceData= {TotalMrp:0, finalprice:0, totalQty:0};
 	#ListItems={};
+	#headerElemts;
 	constructor(){
+		this.#headerElemts = getHeaderCartBtnNcartCounter();
+		console.log(this.#headerElemts);
 		this.#constructCartManager();
 		this.#setEvents();
 		this.updateCartList();
@@ -61,8 +68,14 @@ export class cartDeshBord{
 		
 		this.#updateFlotingIconDetails();
 		this.#updateSidebarDetils();
+		this.#updateHeaderCartBtn();
 	}
 
+	#updateHeaderCartBtn(){
+		const {cartBtn, cartCount} = this.#headerElemts; 
+		//cartCount.innerText = this.#priceData.totalQty;
+	}
+	
 	#updatePriceData(prodId){
 		const {mrp, final_price}=this.#ListItems[prodId].productData;
 		const qty=this.#ListItems[prodId].QTY;
@@ -87,11 +100,16 @@ export class cartDeshBord{
 	#setEvents(){
 		const {cartFloatingBtnContainer,expendBtn} = this.#cartFlotingBtnElemts;
 		const {cartSidebarContainer, collapseBtn} = this.#cartSidebarElemts;
-	
+		const {cartBtn, cartCount}=this.#headerElemts;
 		
 		expendBtn.addEventListener('click', switch2List);
 		collapseBtn.addEventListener('click', switch2Btn);
+		if (cartBtn){
+			//cartBtn.addEventListener('click', switch2List);
+		}
 		
+
+
 		function switch2List(){
 			cartFloatingBtnContainer .classList.add("hide");
 			cartSidebarContainer.classList.remove("hide");

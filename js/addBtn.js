@@ -102,13 +102,13 @@ class add2CartBtnManager{
 				this.itemCount--;
 			}
 		}
-
+		
 		this.#update();
 
 		// Cart update
 		
 		cartObj.updateCartList("from Add");
-		updateAddBtn(this.prodId);
+		updateAddBtn(this.prodId); //update same all same ides btan on product page, product card , cart item
 		
 	}
 	#update(){
@@ -132,7 +132,9 @@ class add2CartBtnManager{
 		
 	}
 	refresh(){
-		
+		const itemQtyValue = cartDataManager.GetValueFormLocalStorage(this.prodId);
+		this.itemCount = itemQtyValue;
+		this.#update();
 	}
 	#hideAddBtn(){
 		const {addBtn, counter} = this.#elemts;

@@ -213,7 +213,7 @@ export class DashbordForRowNav {
 
 			//const addBtnObj = new add2CartBtnManager(ProductId, limits);
 			//addBtnObj.add2CartBtnStrucher(add2CartBtnContainer);
-			add2CartBtnContainer.append(getAdd2CartBtnStrucher( ProductId, limits));
+			add2CartBtnContainer.append(getAdd2CartBtnStrucher( ProductId, limits, "productCard"));
 
 			container.appendChild(imgFrame);
 			container.appendChild(proDetails);
