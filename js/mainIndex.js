@@ -3,6 +3,7 @@ import {DashbordForBanner} from './banner.js';
 import {DashbordForRowNav} from './productCard.js';
 //import {cartDeshBord} from './cartManager.js';
 
+
 new  headerNfooter(); //for header and footer
 
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -12,7 +13,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 		
 		// const longinNsingupDeshbord_Obj = new longinNsingupDeshbord(); //for Login_N_Singup
 		
-		//new cartDeshBord(); //cartSiderBar and Floting Btn
+		//const cartObj= new cartDeshBord(); //cartSiderBar and Floting Btn
+
 });
 
 /*

@@ -199,7 +199,7 @@ export class cartDeshBord{
 			productDetails.append(price);
 			cartItems.append(productDetails);
 		
-			addBtnContainer.append(getAdd2CartBtnStrucher(ProductId, limits));
+			addBtnContainer.append(getAdd2CartBtnStrucher(ProductId, limits, "cartManager"));
 			cartItems.append(addBtnContainer);
 
 			cartItems.style.backgroundColor = categoryColor;
