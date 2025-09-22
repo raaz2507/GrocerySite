@@ -1,7 +1,7 @@
 import {cartDataManager} from './cartDataManager.js';
 import {SQLData} from './sqlDataManager.js';
 import {getAdd2CartBtnStrucher} from './addBtn.js';
-
+import {createSVG_Element} from './createSVG_Element.js';
 
 export class cartDeshBord{
 	#mainCartContainer;
@@ -340,25 +340,7 @@ export class cartDeshBord{
 	
 	
 }
-function createSVG_Element(svgObj){
-	const {viewBox, xmlns, path}= svgObj;
-	const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-	svg.setAttribute('viewBox', viewBox);
-	svg.setAttribute('xmlns', xmlns);
-	const pathElemt = document.createElementNS(xmlns, 'path');
-	pathElemt.setAttribute(path.type, path.property);
 
-	svg.appendChild(pathElemt);
-
-	return svg;
-	/*
-	const svgImg={
-				viewBox: "", 
-				xmlns: "",
-				path: {type:"d", property:""}
-			}
-	*/ 
-}
 
 /*
 

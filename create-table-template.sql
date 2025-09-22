@@ -144,26 +144,26 @@ INSERT INTO addresses (addrId) VALUES('addr_1');
 
 CREATE TABLE naam (
   id SMALLINT UNSIGNED UNIQUE NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  naamId VARCHAR(10) NOT NULL UNIQUE COMMENT 'naamId',
+  usrId VARCHAR(10) NOT NULL UNIQUE COMMENT 'usrId',
   FirstName VARCHAR(10) NOT NULL COMMENT 'first name',
   MidName VARCHAR(10) DEFAULT '',
   LastName VARCHAR(15) DEFAULT ''
 );
-INSERT INTO naam (naamId, `FirstName`, `LastName`) VALUES 
-('naam_1', 'neha', 'khan');
+INSERT INTO naam (usrId, `FirstName`, `LastName`) VALUES 
+('usr_1', 'neha', 'khan');
 
 
 CREATE TABLE IF NOT EXISTS users(
    id SMALLINT UNSIGNED UNIQUE NOT NULL PRIMARY KEY AUTO_INCREMENT,
    usrId VARCHAR(10) NOT NULL UNIQUE COMMENT 'usrId',
-   naamId VARCHAR(10) NOT NULL UNIQUE COMMENT 'naamId',
+  --  naamId VARCHAR(10) NOT NULL UNIQUE COMMENT 'naamId',
    Email VARCHAR(50),
    phoneNumber VARCHAR(10) NOT NULL DEFAULT '9891000000',
    addrId VARCHAR(10) NOT NULL UNIQUE ,
    CONSTRAINT `addrid_fk_u` FOREIGN KEY (addrId) REFERENCES addresses(addrId)
 );
-INSERT INTO users (`usrId`, `naamId`, `Email`, `addrId`) VALUES
-('usr_1', 'naam_1', 'nehaKhan@gmail.com', 'addr_1');
+INSERT INTO users (`usrId`, `Email`, `addrId`) VALUES
+('usr_1', 'nehaKhan@gmail.com', 'addr_1');
 
 CREATE TABLE IF NOT EXISTS user_role(
   id SMALLINT UNSIGNED UNIQUE NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -177,4 +177,18 @@ CREATE TABLE IF NOT EXISTS user_role(
 INSERT INTO user_role (`usrId`, role_name, status) VALUES
 ('usr_1', 'admin', 'active');
 
-
+CREATE VIEW userBaseInfo AS
+SELECT
+  naam.`FirstName`,
+  naam.`MidName`,
+  naam.`LastName`,
+  ur.role_name,
+  ur.status,
+  ur.pwd,
+  u.`phoneNumber`,
+  u.`Email`
+  FROM users u
+  INNER JOIN naam ON naam.`usrId` = u.`usrId`
+  INNER JOIN user_role ur ON u.`usrId` = ur.`usrId`;
+  
+SELECT * FROM `userBaseInfo` WHERE `phoneNumber` = "9891000000" AND pwd= '0000' AND status= 'active';

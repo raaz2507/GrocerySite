@@ -1,5 +1,6 @@
 import {longinNsingupDeshbord} from './Login_N_Singup.js';
 import {setCartObj} from './addBtn.js';
+
 import { cartDeshBord} from './cartManager.js';
 
 
@@ -7,13 +8,17 @@ export class headerNfooter{
 	#elemts;
 	constructor(){
 		this.#elemts = this.#createHeader();
+		
 		const {cartBtn, cartCount}= this.#elemts;
 		const cartObj= new cartDeshBord({cartBtn, cartCount});
 		setCartObj(cartObj); // for cath addbtn changes
+		
 		this.#setHeader();
 		this.#setEvents();
 		this.#footer();
-		this.longinNsingupObj = new longinNsingupDeshbord();
+
+		const {loginBtn, userName} = this.#elemts;
+		this.longinNsingupObj = new longinNsingupDeshbord({loginBtn, userName});
 	}
 	#setHeader(){
 		const header= document.getElementsByTagName("header")[0];
@@ -28,10 +33,12 @@ export class headerNfooter{
 		const elemtMap={
 			header:{type:"header", id:"", classList:[""]},
 			logoNTitle:{type:"div", id:"", classList:["logoNTitle"]},
+			searchBarContainer:{type:"div", id:"", classList:["searchBarContainer"]},
 			searchBar:{type:"div", id:"", classList:["searchBar"]},
 			searchBTN:{type:"button", id:"", classList:["searchBTN"]},
 			btnArea:{type:"div", id:"", classList:["btnArea"]},
 			loginBtn:{type:"button", id:"loginBtn", classList:["loginBtn"]},
+			userName:{type:"p", id: "", classList:["userName"]},
 			cartBtn:{type:"button", id:"", classList:["cartBtn"]},
 			cartCount:{type:"div", id:"", classList:["cartCount"]}
 		};
@@ -54,19 +61,24 @@ export class headerNfooter{
 		return elemts;
 
 		function createStrucher(elemts){
-			const {header,logoNTitle, searchBar, searchBTN, btnArea, loginBtn, cartBtn, cartCount}=elemts;
+			const {header,logoNTitle, searchBarContainer,searchBar, searchBTN, btnArea, loginBtn,userName, cartBtn, cartCount}=elemts;
 			logoNTitle.innerHTML = `<a href="./index.html">
 					<img src="./img/site/siteLogo.png" alt="Site logo" class="siteLogo" >
 					<img src="./img/site/siteTitle.svg" alt="Web Title" class="siteTitle" >
 				</a>`;
 			
 			searchBar.innerHTML = `<input type="search" name="search" id="" placeholder="Search...">`;
-			searchBTN.innerHTML = `<img src="./img/svgs/search.svg" alt="search Icon" class="searchIcon">`;
+			searchBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill= "currentColor">
+															<path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+														 </svg>`;
 			searchBar.appendChild(searchBTN);
+			searchBarContainer.appendChild(searchBar);
 
 			loginBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 							<path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/>
-					</svg><br>Login`;
+					</svg><br>`;
+			userName.innerText=`Login`;
+			loginBtn.appendChild(userName);
 			cartBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="31" class="cartIcon">
 							<path d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
 					</svg>
@@ -85,14 +97,10 @@ export class headerNfooter{
 		searchBTN.addEventListener('click', event=>{
 			console.log("search butn cliked");
 		});
-		loginBtn.addEventListener('click', event=>{
-			this.longinNsingupObj
-		});
+		// loginBtn.addEventListener('click', event=>{
+		// 	this.longinNsingupObj
+		// });
 	}
-	// updateCartCount(cartItemValue){
-	// 	const {cartCount}=this.#elemts;
-	// 	cartCount.innerText = "0";//qtyDetilsForHeaderCartIcon();
-	// }
 
 	#footer(){
 		const footer= document.getElementsByTagName("footer")[0];
@@ -152,10 +160,13 @@ export class headerNfooter{
 				</a>	 
 			</div>
 
-			<div class="searchBar">
-				<input type="search" name="search" id="" placeholder="Search...">
-				<button class="searchBTN"><img src="./img/svgs/search.svg" alt="search Icon" class="searchIcon"></button>
+			<div class="searchBarContainer">
+				<div class="searchBar">
+					<input type="search" name="search" id="" placeholder="Search...">
+					<button class="searchBTN"><img src="./img/svgs/search.svg" alt="search Icon" class="searchIcon"></button>
+				</div>
 			</div>
+
 			<div class="btnArea">
 				
 				<button class="loginBtn" id="loginBtn">

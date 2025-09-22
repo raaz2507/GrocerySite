@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>desine testing Lab</title>
+	<link rel="stylesheet" href="./css/genralStyle.css">
+	<link rel="stylesheet" href="./css/singupForm.css">
+<style>
+	*{
+	/* border: 1px solid red; */
+}
+
+#container{
+	background-color: blueviolet;
+	width:98%;
+	height: 100vh;
+	/* height: 100%; */
+	margin: 0 auto;
+}
+
+</style>
+</head>
+<body>
+		<div id="container">
+			<div id="singup_container">
+				<form action="" id="singupForm">
+					<h1 class="form-Title">Singup Form</h1>
+					
+					<fieldset id="nameInputArea"  >
+						<legend class="titles">Name</legend>
+						<div class="input-field">
+							<label for="first_name">First Name</label>
+							<input type="text" name="first_name" id="first_name" class="input-box" placeholder=" ">
+						</div>
+						<div class="input-field">
+							<label for="min_name">Mid Name</label>
+							<input type="text" name="mid_name" id="mid_name" class="input-box" placeholder=" ">
+						</div>
+						<div class="input-field">
+							<label for="last_name">Last Name</label>
+							<input type="text" name="last_name" id="last_name" class="input-box" placeholder=" ">
+						</div>
+						
+					</fieldset>
+					
+					<fieldset id="addressInputArea" >
+						<legend class="titles">Address</legend>
+						<div class="input-field" style="width:10rem;">
+							<label for="houseNum">House Number</label>
+							<input type="text" name="houseNum" id="houseNum" class="input-box" placeholder="">
+						</div>
+						<div class="input-field" style="width:5rem;">
+							<label for="Block">Block</label>
+							<input type="text" name="Block" id="Block" class="input-box" placeholder="">
+						</div>
+						<div class="input-field" style="width:auto; min-width:13rem;">
+							<label for="city" >City</label>
+							<input type="text" name="city" class="input-box" placeholder="">
+						</div>
+						<div class="input-field" style="width:auto; min-width:13rem;">
+							<label for="state">State</label>
+							<input type="text" name="state" id="state" class="input-box" placeholder="">
+						</div>
+						<div class="input-field" style="width:15rem;">
+							<label for="pinCode">Pin Code</label>
+							<input type="text" name="pinCode" id="pinCode"  maxlength="6" inputmode="numeric" title="..." class="input-box" placeholder=""/>
+						</div>
+						
+					</fieldset>
+					
+					<fieldset id="contact">
+						<legend class="titles">Contact</legend>
+						<div id="EmailInputArea" class="input-field" style="width:48%;">
+							<label for="email">E-Mail</label>
+							<input type="text" name="email" class="input-box" placeholder=" ">
+						</div>
+						<div id="phoneInputArea" class="input-field" style="width:48%;">
+							<label for="phNum">Phone Number</label>
+							<input type="text" name="phNum" class="input-box" maxlength="10" inputmode="numeric" title="..."  placeholder="" >
+						</div>
+					</fieldset>
+					<fieldset id="pwd">
+						<legend class="titles">Password</legend>
+						<div class="input-field">
+							<label for="pwdEnter">Password</label>
+							<input type="password" name="pwdEnter" id="pwdEnter" class="input-box">
+						</div>
+						<div class="input-field">
+							<label for="pwdReEnter">Re Enter password</label>
+							<input type="password" name="pwdReEnter" id="pwdReEnter" class="input-box">
+						</div>
+					</fieldset>
+					<button type="submit">continue</button>
+				</form>
+			</div>
+			
+	</div>
+	<!-- <script src="./js/sqlConnetion.js"></script> -->
+	<script>
+		document.addEventListener("DOMContentLoaded", (event)=>{
+			new singupFormDashbord();
+		});
+		
+		class singupFormDashbord{
+			#elemts;
+			constructor(){
+				this.#elemts = this.#getAllElements();
+				this.#setEvents();
+			}
+			#getAllElements(){
+				const singupForm = document.forms["singupForm"];
+				return {singupForm};
+			}
+			#setEvents(){
+				const {singupForm} =this.#elemts;
+				singupForm['pinCode'].addEventListener('input', onlyNumeric);
+				singupForm['phNum'].addEventListener('input',onlyNumeric);
+				
+				function onlyNumeric(){
+					// Non-digit characters हटाओ, सिर्फ digits बचाओ
+					this.value = this.value.replace(/\D/g, '');
+				}
+				singupForm.addEventListener("submit", (event)=>this.getingValues(event));
+
+			}
+			getingValues(event){
+				const {singupForm} = this.#elemts;
+				event.preventDefault();
+				/*
+				//name data
+				singupForm["first_name"].value;
+				singupForm["mid_name"].value;
+				singupForm["last_name"].value;
+
+				//address data
+				singupForm["houseNum"].value;
+				singupForm["Block"].value;
+				singupForm["city"].value;
+				singupForm["state"].value;
+				singupForm["pinCode"].value;
+
+				//contact
+				singupForm["email"].value;
+				singupForm["phNum"].value;
+
+				//password
+				singupForm["pwdEnter"].value;
+				singupForm["pwdReEnter"].value;
+				*/
+				const nameList =["first_name", "mid_name", "last_name", "houseNum", "Block", "city", "state", "pinCode", "email", "phNum", "pwdEnter", "pwdReEnter"];
+				nameList.forEach(nme=>{
+					console.log(singupForm[nme].value);
+				});
+			}
+		}
+	</script>
+</body>
+</html>

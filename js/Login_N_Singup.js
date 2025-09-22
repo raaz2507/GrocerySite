@@ -1,38 +1,49 @@
+import {SQLData} from './sqlDataManager.js';
+
 export class longinNsingupDeshbord{
-	constructor(){
+	#headerLoginBtn;
+	#elemts={};
+	#logingFormElemts={};
+	constructor(headerLoginBtn){
+		this.#headerLoginBtn =  headerLoginBtn;
 		this.getElements();
 		this.setEventLisnerOnContainer();
 	}
 
 	getElements(){
-		this.loginBtn = document.getElementById("loginBtn");
-		// this.loginNsingup_container =document.getElementById("loginNsingup_container");
-		this.loginNsingup_container = createLS_Container();
+		// const {loginBtn, userName}= this.#headerLoginBtn;
+		
+		let loginNsingup_container = document.getElementById("loginNsingup_container");
+		if (!loginNsingup_container){
+			loginNsingup_container = createLS_Container();
+			document.body.appendChild(loginNsingup_container);
+		}
+		this.#elemts.loginNsingup_container = loginNsingup_container;
 
 		function createLS_Container(){
 			const elmt = document.createElement("div");
 			elmt.id= "loginNsingup_container";
 			elmt.className= "hide";
-			document.body.append(elmt);
 			return elmt;
 		}
 	}
 
 	getLoginFormElements(){
-		this.loginForm = document.forms["loginForm"];
-
-		this.phoneInput = loginForm["phoneNum"];
-		this.phoneInput.maxLength=10;
-
-		this.pwdInput = loginForm["pwd"];
 		
-		this.submitBtn = document.getElementById("submitBtn");
-		this.singupBtn = document.getElementById("singupBtn");
+		this.#logingFormElemts.loginForm = document.forms["loginForm"];
+
+		this.#logingFormElemts.phoneInput = loginForm["phoneNum"];
+		this.#logingFormElemts.phoneInput.maxLength=10;
+
+		this.#logingFormElemts.pwdInput = loginForm["pwd"];
+		
+		this.#logingFormElemts.submitBtn = document.getElementById("submitBtn");
+		this.#logingFormElemts.singupBtn = document.getElementById("singupBtn");
 	}
 
 	setEventLisnerOnContainer(){
-		
-		const {loginBtn, loginNsingup_container}=this;
+		const {loginBtn}=this.#headerLoginBtn;
+		const {loginNsingup_container}=this.#elemts;
 		
 		loginBtn.addEventListener("click", ()=>{
 			if (loginNsingup_container.classList.contains("hide")){
@@ -43,10 +54,10 @@ export class longinNsingupDeshbord{
 			}
 		});
 		loginNsingup_container.addEventListener("click", (event)=>{
-			console.log(event.target.id);
-			if (event.target.id === "loginNsingup_container"){
-				console.log("y");
-			}
+			//console.log(event.target.id);
+			// if (event.target.id === "loginNsingup_container"){
+			// 	console.log("y");
+			// }
 			if (event.target === loginNsingup_container){
 				if (!event.target.classList.contains("hide")){
 					event.target.classList.add("hide");
@@ -56,7 +67,7 @@ export class longinNsingupDeshbord{
 	}
 
 	setLoginFormEventLisners(){
-		const { loginForm, phoneInput, pwdInput, singupBtn}=this;
+		const { loginForm, phoneInput, pwdInput, singupBtn}=this.#logingFormElemts;
 			/* ==== Form Related start ==== */
 			document.getElementsByClassName("pwdViewIcon")[0].addEventListener("click", function(event){
 				const eyeOpen = `./img/svgs/eye-open.svg`;
@@ -100,9 +111,21 @@ export class longinNsingupDeshbord{
 				document.querySelector(".password_container").style.borderColor = isPwdValid ? "green" : "red";
 				submitBtn.disabled= !(isPhoneValid && isPwdValid);
 			}
-			function validateUser(){
+			const {userName}=this.#headerLoginBtn;
+			async function validateUser(){
 				console.log(phoneInput.value);
 				console.log(pwdInput.value);
+				//connect to sql and ask for match usernam and id
+				const user = await SQLData.checkUser("9891000000", "0000");
+				if (user) {
+					console.log("Login successful for", user.FirstName);
+					console.log(user);
+					userName.innerText = user.FirstName.toUpperCase();
+					
+				} else {
+					console.log("Login failed");
+				}
+				
 			}
 			/* ==== form related End ====*/  
 	}

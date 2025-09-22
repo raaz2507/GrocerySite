@@ -40,6 +40,30 @@ export class SQLData{
 			console.error("fetch Error", err);
 		}
 	}
+	
+	static async checkUser(userName, userPwd) {
+		try {
+			const response = await fetch("/isUser", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ userName, userPwd })
+			});
+
+			if (!response.ok) throw new Error("Network response was not ok");
+			const data = await response.json();
+
+			if (data.success) {
+				console.log("Welcome", data.user.FirstName);
+				return data.user; // ✅ ताकि calling function को user मिले
+			} else {
+				alert(data.message);
+				return null; // ❌ credentials गलत हैं
+			}
+		} catch (err) {
+			console.error("Error checking user:", err);
+			return null;
+		}
+	}
 }
  
 
@@ -57,3 +81,5 @@ function fetchData(product_Id){
 	const allDataList =staticData.productDataList; //ye fake data js/staticProductData.js se aa raha hai.
 	return allDataList.find(obj=> obj.ProductId === product_Id) || null;
 }
+
+
